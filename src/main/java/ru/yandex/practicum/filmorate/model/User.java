@@ -10,17 +10,17 @@ import java.time.LocalDate;
 @Data
 @Builder
 public class User {
-    @PositiveOrZero(message = "{validation.id.PositiveOrZero}")
+    @PositiveOrZero(message = "id should be positive or zero")
     private final int id;
-    @NotEmpty(message = "{validation.login.NotEmpty}")
+    @NotEmpty(message = "login should not be empty")
     @Pattern(regexp = "/^([а-яё]+|[a-z]+)$/iu")
     private final String login;
-    @NotEmpty(message = "{validation.email.NotEmpty}")
-    @Email(message = "{validation.email.Type}")
+    @NotEmpty(message = "email should not be empty")
+    @Email(message = "email incorrect")
     private String email;
     private String name;
-    @NotNull(message = "{validation.birthday.NotNull}")
-    @PastOrPresent(message = "{validation.birthday.PastOrPresent}")
+    @NotNull(message = "birthday should not be empty")
+    @PastOrPresent(message = "birthday should not be in future")
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate birthday;
 }
