@@ -11,16 +11,17 @@ import java.time.LocalDate;
 @Builder
 public class User {
     @PositiveOrZero(message = "id should be positive or zero")
-    private final int id;
+    private int id;
     @NotEmpty(message = "login should not be empty")
-    @Pattern(regexp = "/^([а-яё]+|[a-z]+)$/iu")
-    private final String login;
+    @Pattern(regexp =  "([а-яёА-ЯЁ]+|[a-zA-Z]+)")
+    private String login;
     @NotEmpty(message = "email should not be empty")
     @Email(message = "email incorrect")
     private String email;
     private String name;
     @NotNull(message = "birthday should not be empty")
     @PastOrPresent(message = "birthday should not be in future")
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
 }
+

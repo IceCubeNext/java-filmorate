@@ -3,23 +3,25 @@ package ru.yandex.practicum.filmorate.model;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
+import ru.yandex.practicum.filmorate.validation.DateAfter;
 
 import javax.validation.constraints.*;
-import java.time.Duration;
 import java.time.LocalDate;
 
 @Data
 @Builder
 public class Film {
     @PositiveOrZero(message = "id should be positive or zero")
-    private final int id;
+    private int id;
     @NotEmpty(message = "name should not be empty")
-    private final String name;
+    private String name;
     @Size(max = 200, message = "description size should not be more than 200")
-    private final String description;
+    private String description;
     @NotNull(message = "releaseDate should not be null")
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private final LocalDate releaseDate;
-    @Positive(message = "duration should be positive")
-    private final Duration duration;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateAfter(date = "1895-12-28")
+    private LocalDate releaseDate;
+    @NotNull(message = "duration should not be null")
+    @PositiveOrZero(message = "duration should be positive or zero")
+    private int duration;
 }
