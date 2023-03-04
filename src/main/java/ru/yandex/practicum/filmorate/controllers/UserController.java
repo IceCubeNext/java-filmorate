@@ -15,12 +15,18 @@ public class UserController {
     private final Map<Integer, User> users = new HashMap<>();
     private int id = 0;
 
+    public void clearData() {
+        users.clear();
+        id = 0;
+    }
+
+
     @GetMapping
     public List<User> getUsers() {
         return new ArrayList<>(users.values());
     }
 
-    @PostMapping
+    @PostMapping()
     public User addUser(@Valid @RequestBody User user) {
         int id = getNewId();
         user.setId(id);

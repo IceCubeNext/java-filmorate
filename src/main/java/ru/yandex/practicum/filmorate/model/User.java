@@ -1,9 +1,8 @@
 package ru.yandex.practicum.filmorate.model;
 
-import lombok.Builder;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 
@@ -22,6 +21,7 @@ public class User {
     @NotNull(message = "birthday should not be empty")
     @PastOrPresent(message = "birthday should not be in future")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
 }
 
