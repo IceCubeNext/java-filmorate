@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exceptions.NotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
-
 import javax.validation.Valid;
 import java.util.*;
 
@@ -15,6 +14,10 @@ import java.util.*;
 public class FilmController {
     private final Map<Integer, Film> filmsLibrary = new HashMap<>();
     private int id = 0;
+    public void clearData() {
+        filmsLibrary.clear();
+        id = 0;
+    }
     @GetMapping
     public List<Film> getFilms(){
         return new ArrayList<>(filmsLibrary.values());
