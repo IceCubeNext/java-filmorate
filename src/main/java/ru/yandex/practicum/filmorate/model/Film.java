@@ -25,4 +25,5 @@ public class Film {
     @NotNull(message = "duration should not be null")
     @PositiveOrZero(message = "duration should be positive or zero")
     private int duration;
+
 }
