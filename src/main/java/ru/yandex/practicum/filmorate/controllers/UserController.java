@@ -1,6 +1,7 @@
 package ru.yandex.practicum.filmorate.controllers;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.exceptions.NotFoundException;
@@ -31,7 +32,7 @@ public class UserController {
         int id = getNewId();
         user.setId(id);
         users.put(id, user);
-        if (user.getName() == null || user.getName().isBlank()) {
+        if (StringUtils.isEmpty(user.getName())) {
             user.setName(user.getLogin());
         }
         log.debug("create new user " + user);
@@ -44,6 +45,7 @@ public class UserController {
             log.debug("user " + users.get(user.getId()) + " change data to " + user);
             users.put(user.getId(), user);
         } else {
+            log.error("error while updating: user with id=" + user.getId() + " not found");
             throw new NotFoundException("error while updating: user with id=" + user.getId() + " not found");
         }
         return ResponseEntity.ok(user).getBody();

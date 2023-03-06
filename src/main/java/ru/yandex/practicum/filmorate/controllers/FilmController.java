@@ -38,6 +38,7 @@ public class FilmController {
             log.debug("film " + filmsLibrary.get(film.getId()) + " change data to " + film);
             filmsLibrary.put(film.getId(), film);
         } else {
+            log.error("error while updating: film with id=" + film.getId() + " not found");
             throw new NotFoundException("error while updating: film with id=" + film.getId() + " not found");
         }
         return ResponseEntity.ok(film).getBody();
