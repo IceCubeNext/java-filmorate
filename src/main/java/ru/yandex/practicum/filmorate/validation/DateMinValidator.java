@@ -5,10 +5,10 @@ import javax.validation.ConstraintValidatorContext;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class DateAfterValidator implements ConstraintValidator<DateAfter, LocalDate> {
+public class DateMinValidator implements ConstraintValidator<DateMin, LocalDate> {
 
     private LocalDate minDate;
-    public void initialize(DateAfter constraint) {
+    public void initialize(DateMin constraint) {
         minDate = LocalDate.parse(constraint.date(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
     @Override

@@ -1,4 +1,4 @@
-package ru.yandex.practicum.filmorate.controllers;
+package ru.yandex.practicum.filmorate.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -28,7 +28,7 @@ class FilmControllerTest {
 
     @BeforeEach
     public void setUp() {
-        filmController.clearData();
+        //filmController.clearData();
     }
 
     @Test

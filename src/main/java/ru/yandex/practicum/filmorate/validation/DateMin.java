@@ -11,9 +11,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Target({FIELD})
 @Retention(RUNTIME)
-@Constraint(validatedBy = DateAfterValidator.class)
+@Constraint(validatedBy = DateMinValidator.class)
 @Documented
-public @interface DateAfter {
+public @interface DateMin {
     String message() default "date should be after than {date}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
