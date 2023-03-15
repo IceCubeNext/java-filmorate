@@ -13,17 +13,22 @@ import java.util.Map;
 @Slf4j
 @Component
 public class InMemoryFilmStorage implements FilmStorage {
-    private final Map<Integer, Film> films = new HashMap<>();
-    private int id = 0;
+    private final Map<Long, Film> films = new HashMap<>();
+    private long id = 0;
+
+    public boolean isContainFilm(long id) {
+        return films.containsKey(id);
+    }
+
     public Film addFilm(Film film) {
-        int id = getNewId();
+        long id = getNewId();
         film.setId(id);
         films.put(id, film);
         log.debug(String.format("Successfully added film %s", films.get(id)));
         return films.get(id);
     }
 
-    public Film getFilmById(int id) {
+    public Film getFilmById(long id) {
         if(films.containsKey(id)) {
             return films.get(id);
         } else {
@@ -37,7 +42,7 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     public Film updateFilm(Film film) {
-        int id = film.getId();
+        long id = film.getId();
         if(films.containsKey(id)) {
             films.put(id, film);
             return films.get(id);
@@ -47,7 +52,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         }
     }
 
-    public Film deleteFilm(int id) {
+    public Film deleteFilm(long id) {
         if(films.containsKey(id)) {
             Film film = films.get(id);
             films.remove(id);
@@ -58,7 +63,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         }
     }
 
-    private int getNewId() {
+    private long getNewId() {
         return id++;
     }
 }

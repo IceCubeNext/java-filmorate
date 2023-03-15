@@ -14,17 +14,22 @@ import java.util.Map;
 @Slf4j
 @Component
 public class InMemoryUserStorage implements UserStorage {
-    private final Map<Integer, User> users = new HashMap<>();
-    private int id = 0;
+    private final Map<Long, User> users = new HashMap<>();
+    private long id = 0L;
+
+    public boolean isContainUser(long id) {
+        return users.containsKey(id);
+    }
+
     public User addUser(User user) {
-        int id = getNewId();
+        long id = getNewId();
         user.setId(id);
         users.put(id, user);
         log.debug(String.format("Successfully added user %s", users.get(id)));
         return users.get(id);
     }
 
-    public User getUserById(int id) {
+    public User getUserById(long id) {
         if(users.containsKey(id)) {
             return users.get(id);
         } else {
@@ -38,7 +43,7 @@ public class InMemoryUserStorage implements UserStorage {
     }
 
     public User updateUser(User user) {
-        int id = user.getId();
+        long id = user.getId();
         if(users.containsKey(id)) {
             users.put(id, user);
             return users.get(id);
@@ -48,7 +53,7 @@ public class InMemoryUserStorage implements UserStorage {
         }
     }
 
-    public User deleteUser(int id) {
+    public User deleteUser(long id) {
         if(users.containsKey(id)) {
             User user = users.get(id);
             users.remove(id);
@@ -58,7 +63,7 @@ public class InMemoryUserStorage implements UserStorage {
             throw new NotFoundException(String.format("User with id=%d not found", id));
         }
     }
-    private int getNewId() {
+    private long getNewId() {
         return id++;
     }
 }
