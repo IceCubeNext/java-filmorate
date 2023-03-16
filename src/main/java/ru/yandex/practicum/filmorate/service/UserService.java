@@ -9,6 +9,7 @@ import ru.yandex.practicum.filmorate.storage.UserStorage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -25,6 +26,14 @@ public class UserService {
             user.setName(user.getLogin());
         }
         return userStorage.addUser(user);
+    }
+
+    public User getUser(long userId) {
+        if(!userStorage.isContainUser(userId)) {
+            log.error(String.format("User with id=%d not found", userId));
+            throw new NotFoundException(String.format("User with id=%d not found", userId));
+        }
+        return userStorage.getUserById(userId);
     }
 
     public List<User> getUsers() {
@@ -59,6 +68,19 @@ public class UserService {
         }
         userStorage.getUserById(userId).getFriendsId().remove(friendId);
         userStorage.getUserById(friendId).getFriendsId().remove(userId);
+    }
+
+    public List<User> getFriends(long userId) {
+        if(!userStorage.isContainUser(userId)) {
+            log.error(String.format("User with id=%d not found", userId));
+            throw new NotFoundException(String.format("User with id=%d not found", userId));
+        }
+        Set<Long> friendsId = userStorage.getUserById(userId).getFriendsId();
+        List<User> result = new ArrayList<>();
+        for(Long item: friendsId) {
+            result.add(userStorage.getUserById(item));
+        }
+        return result;
     }
 
     public List<User> getCommonFriends(long userId, long friendId) {

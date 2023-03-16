@@ -6,16 +6,13 @@ import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.UserStorage;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @Component
 public class InMemoryUserStorage implements UserStorage {
     private final Map<Long, User> users = new HashMap<>();
-    private long id = 0L;
+    private long id = 1L;
 
     public boolean isContainUser(long id) {
         return users.containsKey(id);
@@ -24,6 +21,9 @@ public class InMemoryUserStorage implements UserStorage {
     public User addUser(User user) {
         long id = getNewId();
         user.setId(id);
+        if (user.getFriendsId() == null) {
+            user.setFriendsId(new HashSet<>());
+        }
         users.put(id, user);
         log.debug(String.format("Successfully added user %s", users.get(id)));
         return users.get(id);
@@ -45,6 +45,9 @@ public class InMemoryUserStorage implements UserStorage {
     public User updateUser(User user) {
         long id = user.getId();
         if(users.containsKey(id)) {
+            if (user.getFriendsId() == null) {
+                user.setFriendsId(new HashSet<>());
+            }
             users.put(id, user);
             return users.get(id);
         } else {

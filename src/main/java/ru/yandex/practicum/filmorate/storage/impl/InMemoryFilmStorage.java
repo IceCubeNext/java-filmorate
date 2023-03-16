@@ -6,15 +6,13 @@ import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.storage.FilmStorage;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 @Slf4j
 @Component
 public class InMemoryFilmStorage implements FilmStorage {
     private final Map<Long, Film> films = new HashMap<>();
-    private long id = 0;
+    private long id = 1L;
 
     public boolean isContainFilm(long id) {
         return films.containsKey(id);
@@ -23,6 +21,9 @@ public class InMemoryFilmStorage implements FilmStorage {
     public Film addFilm(Film film) {
         long id = getNewId();
         film.setId(id);
+        if (film.getLikes() == null) {
+            film.setLikes(new HashSet<>());
+        }
         films.put(id, film);
         log.debug(String.format("Successfully added film %s", films.get(id)));
         return films.get(id);
@@ -44,6 +45,9 @@ public class InMemoryFilmStorage implements FilmStorage {
     public Film updateFilm(Film film) {
         long id = film.getId();
         if(films.containsKey(id)) {
+            if (film.getLikes() == null) {
+                film.setLikes(new HashSet<>());
+            }
             films.put(id, film);
             return films.get(id);
         } else {

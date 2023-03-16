@@ -18,10 +18,22 @@ public class FilmController {
         this.filmService = filmService;
     }
 
+    @GetMapping("{id}")
+    public Film getFilm(@PathVariable Long id) {
+        log.debug(String.format("Get film with id=%d", id));
+        return filmService.getFilm(id);
+    }
+
     @GetMapping
-    public List<Film> getFilms(){
+    public List<Film> getFilms() {
         log.debug(String.format("Get films. Return %d items", filmService.getFilms().size()));
         return filmService.getFilms();
+    }
+
+    @GetMapping("/popular")
+    public List<Film> getTopFilms(@RequestParam(defaultValue = "10") int count) {
+        log.debug(String.format("Get top %d films. Return %d items", count, filmService.getFilms().size()));
+        return filmService.getTop(count);
     }
 
     @PostMapping
@@ -36,5 +48,21 @@ public class FilmController {
         log.debug(String.format("Put film %s", film));
         filmService.updateFilm(film);
         return ResponseEntity.ok(film).getBody();
+    }
+
+    @PutMapping("{id}/like/{userId}")
+    public void setLike(@PathVariable Long id,
+                        @PathVariable Long userId) {
+        log.debug(String.format("Put: user id=%d set like to film with id=%d", userId, id));
+        filmService.addLike(userId, id);
+        //TODO response
+    }
+
+    @DeleteMapping("{id}/like/{userId}")
+    public void deleteLike(@PathVariable Long id,
+                           @PathVariable Long userId) {
+        log.debug(String.format("Delete: user id=%d delete like from film with id=%d", userId, id));
+        filmService.deleteLike(userId, id);
+        //TODO response
     }
 }

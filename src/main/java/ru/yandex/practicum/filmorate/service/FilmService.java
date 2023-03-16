@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 public class FilmService {
     private final FilmStorage filmStorage;
     private final UserStorage userStorage;
-    private final int TOP_COUNT = 10;
 
     public FilmService(FilmStorage filmStorage, UserStorage userStorage) {
         this.filmStorage = filmStorage;
@@ -29,6 +28,14 @@ public class FilmService {
 
     public List<Film> getFilms() {
         return filmStorage.getFilms();
+    }
+
+    public Film getFilm(long filmId) {
+        if(!filmStorage.isContainFilm(filmId)) {
+            log.error(String.format("Film with id=%d not found", filmId));
+            throw new NotFoundException(String.format("Film with id=%d not found", filmId));
+        }
+        return filmStorage.getFilmById(filmId);
     }
 
     public Film updateFilm(Film film) {
@@ -59,9 +66,9 @@ public class FilmService {
         filmStorage.getFilmById(filmId).getLikes().remove(userId);
     }
 
-    public List<Film> getTop() {
+    public List<Film> getTop(int count) {
         return filmStorage.getFilms().stream()
-                .sorted(Comparator.comparing(f -> f.getLikes().size()))
-                .limit(TOP_COUNT).collect(Collectors.toList());
+                .sorted(Comparator.comparing(f -> f.getLikes().size() * -1))
+                .limit(count).collect(Collectors.toList());
     }
 }
