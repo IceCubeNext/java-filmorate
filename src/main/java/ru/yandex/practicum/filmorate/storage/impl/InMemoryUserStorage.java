@@ -14,7 +14,7 @@ public class InMemoryUserStorage implements UserStorage {
     private final Map<Long, User> users = new HashMap<>();
     private long id = 1L;
 
-    public boolean isContainUser(long id) {
+    public boolean containsUser(long id) {
         return users.containsKey(id);
     }
 
@@ -25,7 +25,6 @@ public class InMemoryUserStorage implements UserStorage {
             user.setFriendsId(new HashSet<>());
         }
         users.put(id, user);
-        log.debug(String.format("Successfully added user %s", users.get(id)));
         return users.get(id);
     }
 
@@ -33,7 +32,6 @@ public class InMemoryUserStorage implements UserStorage {
         if(users.containsKey(id)) {
             return users.get(id);
         } else {
-            log.error(String.format("User with id=%d not found", id));
             throw new NotFoundException(String.format("User with id=%d not found", id));
         }
     }
@@ -51,7 +49,6 @@ public class InMemoryUserStorage implements UserStorage {
             users.put(id, user);
             return users.get(id);
         } else {
-            log.error(String.format("User with id=%d not found", id));
             throw new NotFoundException(String.format("User with id=%d not found", id));
         }
     }
@@ -62,7 +59,6 @@ public class InMemoryUserStorage implements UserStorage {
             users.remove(id);
             return user;
         } else {
-            log.error(String.format("User with id=%d not found", id));
             throw new NotFoundException(String.format("User with id=%d not found", id));
         }
     }

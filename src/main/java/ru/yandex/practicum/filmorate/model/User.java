@@ -11,17 +11,17 @@ import java.util.Set;
 @Data
 @Builder
 public class User {
-    @PositiveOrZero(message = "id should be positive or zero")
+    @PositiveOrZero(message = "Id should be positive or zero")
     private long id;
-    @NotEmpty(message = "login should not be empty")
+    @NotEmpty(message = "Login should not be empty")
     @Pattern(regexp =  "([а-яёА-ЯЁ]+|[a-zA-Z]+)")
     private String login;
-    @NotEmpty(message = "email should not be empty")
-    @Email(message = "email incorrect")
+    @NotEmpty(message = "Email should not be empty")
+    @Email(message = "Email incorrect")
     private String email;
     private String name;
-    @NotNull(message = "birthday should not be empty")
-    @PastOrPresent(message = "birthday should not be in future")
+    @NotNull(message = "Birthday should not be empty")
+    @PastOrPresent(message = "Birthday should not be in future")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;

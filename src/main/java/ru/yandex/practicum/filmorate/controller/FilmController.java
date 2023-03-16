@@ -1,7 +1,6 @@
 package ru.yandex.practicum.filmorate.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.service.FilmService;
@@ -38,16 +37,14 @@ public class FilmController {
 
     @PostMapping
     public Film addFilm(@Valid @RequestBody Film film) {
-        log.debug(String.format("Post new film %s", film));
-        filmService.addFilm(film);
-        return ResponseEntity.ok(film).getBody();
+        log.debug(String.format("Post: add new film %s", film));
+        return filmService.addFilm(film);
     }
 
     @PutMapping
     public Film updateFilm(@Valid @RequestBody Film film) {
-        log.debug(String.format("Put film %s", film));
-        filmService.updateFilm(film);
-        return ResponseEntity.ok(film).getBody();
+        log.debug(String.format("Put: film update %s", film));
+        return filmService.updateFilm(film);
     }
 
     @PutMapping("{id}/like/{userId}")
@@ -55,7 +52,6 @@ public class FilmController {
                         @PathVariable Long userId) {
         log.debug(String.format("Put: user id=%d set like to film with id=%d", userId, id));
         filmService.addLike(userId, id);
-        //TODO response
     }
 
     @DeleteMapping("{id}/like/{userId}")
@@ -63,6 +59,5 @@ public class FilmController {
                            @PathVariable Long userId) {
         log.debug(String.format("Delete: user id=%d delete like from film with id=%d", userId, id));
         filmService.deleteLike(userId, id);
-        //TODO response
     }
 }

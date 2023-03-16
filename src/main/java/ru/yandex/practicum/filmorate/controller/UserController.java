@@ -1,7 +1,6 @@
 package ru.yandex.practicum.filmorate.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.UserService;
@@ -26,35 +25,33 @@ public class UserController {
 
     @GetMapping
     public List<User> getUsers() {
-        log.debug(String.format("Get users. Return %d items", userService.getUsers().size()));
+        log.debug(String.format("Get: get users. Return %d items", userService.getUsers().size()));
         return userService.getUsers();
     }
 
     @GetMapping("{id}/friends")
     public List<User> getFriends(@PathVariable Long id) {
-        log.debug(String.format("Get: friends of user with id=%d. Return %d items", id, userService.getUsers().size()));
+        log.debug(String.format("Get: get friends of user with id=%d. Return %d items", id, userService.getUsers().size()));
         return userService.getFriends(id);
     }
 
     @GetMapping("{id}/friends/common/{otherId}")
     public List<User> getFriends(@PathVariable Long id,
                                  @PathVariable Long otherId) {
-        log.debug(String.format("Get: common friends of users with id=%d and id=%d. Return %d items", id, otherId, userService.getUsers().size()));
+        log.debug(String.format("Get: get common friends of users with id=%d and id=%d. Return %d items", id, otherId, userService.getUsers().size()));
         return userService.getCommonFriends(id, otherId);
     }
 
     @PostMapping()
     public User addUser(@Valid @RequestBody User user) {
-        log.debug(String.format("Post new user %s", user));
-        userService.addUser(user);
-        return ResponseEntity.ok(user).getBody();
+        log.debug(String.format("Post: add new user %s", user));
+        return userService.addUser(user);
     }
 
     @PutMapping
     public User updateUser(@Valid @RequestBody User user) {
-        log.debug(String.format("Put user %s", user));
-        userService.updateUser(user);
-        return ResponseEntity.ok(user).getBody();
+        log.debug(String.format("Put: update for user %s", user));
+        return userService.updateUser(user);
     }
 
     @PutMapping("{id}/friends/{friendId}")

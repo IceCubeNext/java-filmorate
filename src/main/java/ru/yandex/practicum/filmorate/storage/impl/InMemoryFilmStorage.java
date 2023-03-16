@@ -14,7 +14,7 @@ public class InMemoryFilmStorage implements FilmStorage {
     private final Map<Long, Film> films = new HashMap<>();
     private long id = 1L;
 
-    public boolean isContainFilm(long id) {
+    public boolean containsFilm(long id) {
         return films.containsKey(id);
     }
 
@@ -25,7 +25,6 @@ public class InMemoryFilmStorage implements FilmStorage {
             film.setLikes(new HashSet<>());
         }
         films.put(id, film);
-        log.debug(String.format("Successfully added film %s", films.get(id)));
         return films.get(id);
     }
 
@@ -33,7 +32,6 @@ public class InMemoryFilmStorage implements FilmStorage {
         if(films.containsKey(id)) {
             return films.get(id);
         } else {
-            log.error(String.format("Film with id=%d not found", id));
             throw new NotFoundException(String.format("Film with id=%d not found", id));
         }
     }
@@ -51,7 +49,6 @@ public class InMemoryFilmStorage implements FilmStorage {
             films.put(id, film);
             return films.get(id);
         } else {
-            log.error(String.format("Film with id=%d not found", id));
             throw new NotFoundException(String.format("Film with id=%d not found", id));
         }
     }
@@ -62,7 +59,6 @@ public class InMemoryFilmStorage implements FilmStorage {
             films.remove(id);
             return film;
         } else {
-            log.error(String.format("Film with id=%d not found", id));
             throw new NotFoundException(String.format("Film with id=%d not found", id));
         }
     }

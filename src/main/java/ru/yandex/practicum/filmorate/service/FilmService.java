@@ -31,10 +31,6 @@ public class FilmService {
     }
 
     public Film getFilm(long filmId) {
-        if(!filmStorage.isContainFilm(filmId)) {
-            log.error(String.format("Film with id=%d not found", filmId));
-            throw new NotFoundException(String.format("Film with id=%d not found", filmId));
-        }
         return filmStorage.getFilmById(filmId);
     }
 
@@ -43,24 +39,20 @@ public class FilmService {
     }
 
     public void addLike(long userId, long filmId) {
-        if(!userStorage.isContainUser(userId)) {
-            log.error(String.format("User with id=%d not found", userId));
+        if (!userStorage.containsUser(userId)) {
             throw new NotFoundException(String.format("User with id=%d not found", userId));
         }
-        if(!filmStorage.isContainFilm(filmId)) {
-            log.error(String.format("Film with id=%d not found", filmId));
+        if (!filmStorage.containsFilm(filmId)) {
             throw new NotFoundException(String.format("Film with id=%d not found", filmId));
         }
         filmStorage.getFilmById(filmId).getLikes().add(userId);
     }
 
     public void deleteLike(long userId, long filmId) {
-        if(!userStorage.isContainUser(userId)) {
-            log.error(String.format("User with id=%d not found", userId));
+        if (!userStorage.containsUser(userId)) {
             throw new NotFoundException(String.format("User with id=%d not found", userId));
         }
-        if(!filmStorage.isContainFilm(filmId)) {
-            log.error(String.format("Film with id=%d not found", filmId));
+        if (!filmStorage.containsFilm(filmId)) {
             throw new NotFoundException(String.format("Film with id=%d not found", filmId));
         }
         filmStorage.getFilmById(filmId).getLikes().remove(userId);

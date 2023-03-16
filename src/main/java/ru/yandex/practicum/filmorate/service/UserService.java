@@ -7,9 +7,7 @@ import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.UserStorage;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -29,10 +27,6 @@ public class UserService {
     }
 
     public User getUser(long userId) {
-        if(!userStorage.isContainUser(userId)) {
-            log.error(String.format("User with id=%d not found", userId));
-            throw new NotFoundException(String.format("User with id=%d not found", userId));
-        }
         return userStorage.getUserById(userId);
     }
 
@@ -45,12 +39,10 @@ public class UserService {
     }
 
     public void addFriend(long userId, long friendId) {
-        if(!userStorage.isContainUser(userId)) {
-            log.error(String.format("User with id=%d not found", userId));
+        if (!userStorage.containsUser(userId)) {
             throw new NotFoundException(String.format("User with id=%d not found", userId));
         }
-        if(!userStorage.isContainUser(friendId)) {
-            log.error(String.format("User with id=%d not found", friendId));
+        if (!userStorage.containsUser(friendId)) {
             throw new NotFoundException(String.format("User with id=%d not found", friendId));
         }
         userStorage.getUserById(userId).getFriendsId().add(friendId);
@@ -58,12 +50,10 @@ public class UserService {
     }
 
     public void deleteFriend(long userId, long friendId) {
-        if(!userStorage.isContainUser(userId)) {
-            log.error(String.format("User with id=%d not found", userId));
+        if (!userStorage.containsUser(userId)) {
             throw new NotFoundException(String.format("User with id=%d not found", userId));
         }
-        if(!userStorage.isContainUser(friendId)) {
-            log.error(String.format("User with id=%d not found", friendId));
+        if (!userStorage.containsUser(friendId)) {
             throw new NotFoundException(String.format("User with id=%d not found", friendId));
         }
         userStorage.getUserById(userId).getFriendsId().remove(friendId);
@@ -71,34 +61,15 @@ public class UserService {
     }
 
     public List<User> getFriends(long userId) {
-        if(!userStorage.isContainUser(userId)) {
-            log.error(String.format("User with id=%d not found", userId));
-            throw new NotFoundException(String.format("User with id=%d not found", userId));
-        }
-        Set<Long> friendsId = userStorage.getUserById(userId).getFriendsId();
-        List<User> result = new ArrayList<>();
-        for(Long item: friendsId) {
-            result.add(userStorage.getUserById(item));
-        }
-        return result;
+        return userStorage.getUserById(userId).getFriendsId().stream()
+                .map(userStorage::getUserById)
+                .collect(Collectors.toList());
     }
 
     public List<User> getCommonFriends(long userId, long friendId) {
-        if(!userStorage.isContainUser(userId)) {
-            log.error(String.format("User with id=%d not found", userId));
-            throw new NotFoundException(String.format("User with id=%d not found", userId));
-        }
-        if(!userStorage.isContainUser(friendId)) {
-            log.error(String.format("User with id=%d not found", friendId));
-            throw new NotFoundException(String.format("User with id=%d not found", friendId));
-        }
-        List<Long> commonIds = userStorage.getUserById(userId).getFriendsId().stream()
+        return userStorage.getUserById(userId).getFriendsId().stream()
                 .filter(userStorage.getUserById(friendId).getFriendsId()::contains)
+                .map(userStorage::getUserById)
                 .collect(Collectors.toList());
-        List<User> result = new ArrayList<>();
-        for(Long item: commonIds) {
-            result.add(userStorage.getUserById(item));
-        }
-        return result;
     }
 }

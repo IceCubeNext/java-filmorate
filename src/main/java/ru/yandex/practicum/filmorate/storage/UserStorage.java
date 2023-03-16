@@ -5,7 +5,7 @@ import ru.yandex.practicum.filmorate.model.User;
 import java.util.List;
 
 public interface UserStorage {
-    boolean isContainUser(long id);
+    boolean containsUser(long id);
     User addUser(User user);
     User getUserById(long id);
     List<User> getUsers();
