@@ -21,7 +21,7 @@ public class UserController {
 
     @GetMapping("{id}")
     public User getUser(@PathVariable Long id) {
-        log.debug(String.format("Get user with id=%d", id));
+        log.debug(String.format("Get: get user with id=%d", id));
         return userService.getUser(id);
     }
 
@@ -57,16 +57,16 @@ public class UserController {
     }
 
     @PutMapping("{id}/friends/{friendId}")
-    public void addFriend(@PathVariable Long id,
+    public User addFriend(@PathVariable Long id,
                           @PathVariable Long friendId) {
         log.debug(String.format("Put: user id=%d add friend with id=%d", id, friendId));
-        userService.addFriend(id, friendId);
+        return userService.addFriend(id, friendId);
     }
 
     @DeleteMapping("{id}/friends/{friendId}")
-    public void deleteFriend(@PathVariable Long id,
+    public User deleteFriend(@PathVariable Long id,
                              @PathVariable Long friendId) {
         log.debug(String.format("Put: user id=%d delete friend with id=%d", id, friendId));
-        userService.deleteFriend(id, friendId);
+        return userService.deleteFriend(id, friendId);
     }
 }

@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.UserStorage;
 
@@ -40,26 +39,12 @@ public class UserService {
         return userStorage.updateUser(user);
     }
 
-    public void addFriend(long userId, long friendId) {
-        if (!userStorage.containsUser(userId)) {
-            throw new NotFoundException(String.format("User with id=%d not found", userId));
-        }
-        if (!userStorage.containsUser(friendId)) {
-            throw new NotFoundException(String.format("User with id=%d not found", friendId));
-        }
-        userStorage.getUserById(userId).getFriendsId().add(friendId);
-        userStorage.getUserById(friendId).getFriendsId().add(userId);
+    public User addFriend(long userId, long friendId) {
+        return userStorage.addFriend(userId, friendId);
     }
 
-    public void deleteFriend(long userId, long friendId) {
-        if (!userStorage.containsUser(userId)) {
-            throw new NotFoundException(String.format("User with id=%d not found", userId));
-        }
-        if (!userStorage.containsUser(friendId)) {
-            throw new NotFoundException(String.format("User with id=%d not found", friendId));
-        }
-        userStorage.getUserById(userId).getFriendsId().remove(friendId);
-        userStorage.getUserById(friendId).getFriendsId().remove(userId);
+    public User deleteFriend(long userId, long friendId) {
+        return userStorage.deleteFriend(userId, friendId);
     }
 
     public List<User> getFriends(long userId) {

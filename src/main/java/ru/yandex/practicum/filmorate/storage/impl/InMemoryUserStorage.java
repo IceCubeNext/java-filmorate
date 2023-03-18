@@ -62,6 +62,27 @@ public class InMemoryUserStorage implements UserStorage {
             throw new NotFoundException(String.format("User with id=%d not found", id));
         }
     }
+
+    public User addFriend(long id, long friendId) {
+        if (!(users.containsKey(id) && users.containsKey(friendId))) {
+            id = users.containsKey(id) ? friendId : id;
+            throw  new NotFoundException(String.format("User with id=%d not found", id));
+        }
+        users.get(id).getFriendsId().add(friendId);
+        users.get(friendId).getFriendsId().add(id);
+        return users.get(id);
+    }
+
+    public User deleteFriend(long id, long friendId) {
+        if (!(users.containsKey(id) && users.containsKey(friendId))) {
+            id = users.containsKey(id) ? friendId : id;
+            throw  new NotFoundException(String.format("User with id=%d not found", id));
+        }
+        users.get(id).getFriendsId().remove(friendId);
+        users.get(friendId).getFriendsId().remove(id);
+        return users.get(id);
+    }
+
     private long getNewId() {
         return id++;
     }

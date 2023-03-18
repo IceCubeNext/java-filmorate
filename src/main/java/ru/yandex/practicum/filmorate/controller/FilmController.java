@@ -50,16 +50,16 @@ public class FilmController {
     }
 
     @PutMapping("{id}/like/{userId}")
-    public void setLike(@PathVariable Long id,
+    public Film setLike(@PathVariable Long id,
                         @PathVariable Long userId) {
         log.debug(String.format("Put: user id=%d set like to film with id=%d", userId, id));
-        filmService.addLike(userId, id);
+        return filmService.addLike(userId, id);
     }
 
     @DeleteMapping("{id}/like/{userId}")
-    public void deleteLike(@PathVariable Long id,
+    public Film deleteLike(@PathVariable Long id,
                            @PathVariable Long userId) {
         log.debug(String.format("Delete: user id=%d delete like from film with id=%d", userId, id));
-        filmService.deleteLike(userId, id);
+        return filmService.deleteLike(userId, id);
     }
 }

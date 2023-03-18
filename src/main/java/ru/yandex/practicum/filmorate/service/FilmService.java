@@ -40,24 +40,20 @@ public class FilmService {
         return filmStorage.updateFilm(film);
     }
 
-    public void addLike(long userId, long filmId) {
-        if (!userStorage.containsUser(userId)) {
+    public Film addLike(long userId, long filmId) {
+        if (userStorage.containsUser(userId)) {
+            return filmStorage.addLike(filmId, userId);
+        } else {
             throw new NotFoundException(String.format("User with id=%d not found", userId));
         }
-        if (!filmStorage.containsFilm(filmId)) {
-            throw new NotFoundException(String.format("Film with id=%d not found", filmId));
-        }
-        filmStorage.getFilmById(filmId).getLikes().add(userId);
     }
 
-    public void deleteLike(long userId, long filmId) {
-        if (!userStorage.containsUser(userId)) {
+    public Film deleteLike(long userId, long filmId) {
+        if (userStorage.containsUser(userId)) {
+            return filmStorage.deleteLike(filmId, userId);
+        } else {
             throw new NotFoundException(String.format("User with id=%d not found", userId));
         }
-        if (!filmStorage.containsFilm(filmId)) {
-            throw new NotFoundException(String.format("Film with id=%d not found", filmId));
-        }
-        filmStorage.getFilmById(filmId).getLikes().remove(userId);
     }
 
     public List<Film> getTop(int count) {
