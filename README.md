@@ -1,6 +1,11 @@
 # java-filmorate
 ER диаграмма базы данных filmorate
 
+Good job!
+There is a slight gap between technical specification and your ER-diagram.
+According to the TS the connection film - genre must be "one to many".
+All the rest is perfect.
+
 <image src="Entity Relationship Diagram.jpg" alt="ER диаграмма"/>
 
 #### FilmService
