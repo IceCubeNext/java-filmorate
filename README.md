@@ -3,7 +3,8 @@ Template repository for Filmorate project.
 
 #### ER диаграмма БД filmorate
 
-![ER диаграмма](images\Entity Relationship Diagram.jpg "ER диаграмма")
+<img title="ER diagram" alt="ER diagram" src="/images/Entity Relationship Diagram.jpg">
+
 #### FilmSErvice
 
 addFilm(Film film)
