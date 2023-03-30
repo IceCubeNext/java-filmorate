@@ -20,7 +20,7 @@ public class FilmController {
     }
 
     @GetMapping("{id}")
-    public Film getFilm(@PathVariable Long id) {
+    public Optional<Film> getFilm(@PathVariable Long id) {
         log.debug(String.format("Get film with id=%d", id));
         return filmService.getFilm(id);
     }
@@ -38,26 +38,26 @@ public class FilmController {
     }
 
     @PostMapping
-    public Film addFilm(@Valid @RequestBody Film film) {
+    public Optional<Film> addFilm(@Valid @RequestBody Film film) {
         log.debug(String.format("Post: add new film %s", film));
         return filmService.addFilm(film);
     }
 
     @PutMapping
-    public Film updateFilm(@Valid @RequestBody Film film) {
+    public Optional<Film> updateFilm(@Valid @RequestBody Film film) {
         log.debug(String.format("Put: film update %s", film));
         return filmService.updateFilm(film);
     }
 
     @PutMapping("{id}/like/{userId}")
-    public Film setLike(@PathVariable Long id,
+    public boolean setLike(@PathVariable Long id,
                         @PathVariable Long userId) {
         log.debug(String.format("Put: user id=%d set like to film with id=%d", userId, id));
         return filmService.addLike(userId, id);
     }
 
     @DeleteMapping("{id}/like/{userId}")
-    public Film deleteLike(@PathVariable Long id,
+    public boolean deleteLike(@PathVariable Long id,
                            @PathVariable Long userId) {
         log.debug(String.format("Delete: user id=%d delete like from film with id=%d", userId, id));
         return filmService.deleteLike(userId, id);

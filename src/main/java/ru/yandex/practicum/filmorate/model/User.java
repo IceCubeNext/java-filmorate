@@ -27,6 +27,5 @@ public class User {
     private LocalDate birthday;
     @Builder.Default
     Set<Long> friendsId = new HashSet<>();
-
 }
 

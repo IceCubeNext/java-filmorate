@@ -27,6 +27,7 @@ public class Film {
     @NotNull(message = "Duration should not be null")
     @PositiveOrZero(message = "Duration should be positive or zero")
     private int duration;
+    private String mpaRating;
     @Builder.Default
     private Set<Long> likes = new HashSet<>();
 }

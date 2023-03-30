@@ -9,7 +9,7 @@ import ru.yandex.practicum.filmorate.storage.UserStorage;
 import java.util.*;
 
 @Slf4j
-@Component
+@Component("InMemoryUserStorage")
 public class InMemoryUserStorage implements UserStorage {
     private final Map<Long, User> users = new HashMap<>();
     private long id = 1L;
@@ -18,19 +18,19 @@ public class InMemoryUserStorage implements UserStorage {
         return users.containsKey(id);
     }
 
-    public User addUser(User user) {
+    public Optional<User> addUser(User user) {
         long id = getNewId();
         user.setId(id);
         if (user.getFriendsId() == null) {
             user.setFriendsId(new HashSet<>());
         }
         users.put(id, user);
-        return users.get(id);
+        return Optional.of(users.get(id));
     }
 
-    public User getUserById(long id) {
+    public Optional<User> getUserById(long id) {
         if(users.containsKey(id)) {
-            return users.get(id);
+            return Optional.of(users.get(id));
         } else {
             throw new NotFoundException(String.format("User with id=%d not found", id));
         }
@@ -40,47 +40,47 @@ public class InMemoryUserStorage implements UserStorage {
         return new ArrayList<>(users.values());
     }
 
-    public User updateUser(User user) {
+    public Optional<User> updateUser(User user) {
         long id = user.getId();
         if(users.containsKey(id)) {
             if (user.getFriendsId() == null) {
                 user.setFriendsId(new HashSet<>());
             }
             users.put(id, user);
-            return users.get(id);
+            return Optional.of(users.get(id));
         } else {
             throw new NotFoundException(String.format("User with id=%d not found", id));
         }
     }
 
-    public User deleteUser(long id) {
+    public Optional<User> deleteUser(long id) {
         if(users.containsKey(id)) {
             User user = users.get(id);
             users.remove(id);
-            return user;
+            return Optional.of(user);
         } else {
             throw new NotFoundException(String.format("User with id=%d not found", id));
         }
     }
 
-    public User addFriend(long id, long friendId) {
+    public boolean addFriend(long id, long friendId) {
         if (!(users.containsKey(id) && users.containsKey(friendId))) {
             id = users.containsKey(id) ? friendId : id;
             throw  new NotFoundException(String.format("User with id=%d not found", id));
         }
         users.get(id).getFriendsId().add(friendId);
         users.get(friendId).getFriendsId().add(id);
-        return users.get(id);
+        return true;
     }
 
-    public User deleteFriend(long id, long friendId) {
+    public boolean deleteFriend(long id, long friendId) {
         if (!(users.containsKey(id) && users.containsKey(friendId))) {
             id = users.containsKey(id) ? friendId : id;
             throw  new NotFoundException(String.format("User with id=%d not found", id));
         }
         users.get(id).getFriendsId().remove(friendId);
         users.get(friendId).getFriendsId().remove(id);
-        return users.get(id);
+        return true;
     }
 
     private long getNewId() {

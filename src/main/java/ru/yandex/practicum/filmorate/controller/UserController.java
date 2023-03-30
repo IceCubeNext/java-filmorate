@@ -20,7 +20,7 @@ public class UserController {
     }
 
     @GetMapping("{id}")
-    public User getUser(@PathVariable Long id) {
+    public Optional<User> getUser(@PathVariable Long id) {
         log.debug(String.format("Get: get user with id=%d", id));
         return userService.getUser(id);
     }
@@ -45,27 +45,27 @@ public class UserController {
     }
 
     @PostMapping()
-    public User addUser(@Valid @RequestBody User user) {
+    public Optional<User> addUser(@Valid @RequestBody User user) {
         log.debug(String.format("Post: add new user %s", user));
         return userService.addUser(user);
     }
 
     @PutMapping
-    public User updateUser(@Valid @RequestBody User user) {
+    public Optional<User> updateUser(@Valid @RequestBody User user) {
         log.debug(String.format("Put: update for user %s", user));
         return userService.updateUser(user);
     }
 
     @PutMapping("{id}/friends/{friendId}")
-    public User addFriend(@PathVariable Long id,
+    public boolean addFriend(@PathVariable Long id,
                           @PathVariable Long friendId) {
         log.debug(String.format("Put: user id=%d add friend with id=%d", id, friendId));
         return userService.addFriend(id, friendId);
     }
 
     @DeleteMapping("{id}/friends/{friendId}")
-    public User deleteFriend(@PathVariable Long id,
-                             @PathVariable Long friendId) {
+    public boolean deleteFriend(@PathVariable Long id,
+                                       @PathVariable Long friendId) {
         log.debug(String.format("Put: user id=%d delete friend with id=%d", id, friendId));
         return userService.deleteFriend(id, friendId);
     }

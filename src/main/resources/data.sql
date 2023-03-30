@@ -1,4 +1,4 @@
-INSERT INTO PUBLIC."genre" (name)
+INSERT INTO genre (name)
 VALUES ('Комедия'),
        ('Драмма'),
        ('Мультфильм'),
