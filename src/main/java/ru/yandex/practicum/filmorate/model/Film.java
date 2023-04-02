@@ -7,8 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import ru.yandex.practicum.filmorate.validation.DateMin;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Data
 @Builder
@@ -27,7 +26,6 @@ public class Film {
     @NotNull(message = "Duration should not be null")
     @PositiveOrZero(message = "Duration should be positive or zero")
     private int duration;
-    private String mpaRating;
-    @Builder.Default
-    private Set<Long> likes = new HashSet<>();
+    private Mpa mpa;
+    private List<Genre> genres;
 }

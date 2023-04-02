@@ -5,8 +5,6 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 @Data
 @Builder
@@ -25,7 +23,5 @@ public class User {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
-    @Builder.Default
-    Set<Long> friendsId = new HashSet<>();
 }
 

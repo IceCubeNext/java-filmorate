@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.service.FriendService;
 import ru.yandex.practicum.filmorate.service.UserService;
 
 import javax.validation.Valid;
@@ -14,9 +15,11 @@ import java.util.*;
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
+    private final FriendService friendService;
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, FriendService friendService) {
         this.userService = userService;
+        this.friendService = friendService;
     }
 
     @GetMapping("{id}")
@@ -33,15 +36,15 @@ public class UserController {
 
     @GetMapping("{id}/friends")
     public List<User> getFriends(@PathVariable Long id) {
-        log.debug(String.format("Get: get friends of user with id=%d. Return %d items", id, userService.getUsers().size()));
-        return userService.getFriends(id);
+        log.debug(String.format("Get: get friends of user with id=%d.", id));
+        return friendService.getFriends(id);
     }
 
     @GetMapping("{id}/friends/common/{otherId}")
     public List<User> getFriends(@PathVariable Long id,
                                  @PathVariable Long otherId) {
-        log.debug(String.format("Get: get common friends of users with id=%d and id=%d. Return %d items", id, otherId, userService.getUsers().size()));
-        return userService.getCommonFriends(id, otherId);
+        log.debug(String.format("Get: get common friends of users with id=%d and id=%d.", id, otherId));
+        return friendService.getCommonFriends(id, otherId);
     }
 
     @PostMapping()
@@ -58,15 +61,15 @@ public class UserController {
 
     @PutMapping("{id}/friends/{friendId}")
     public boolean addFriend(@PathVariable Long id,
-                          @PathVariable Long friendId) {
+                             @PathVariable Long friendId) {
         log.debug(String.format("Put: user id=%d add friend with id=%d", id, friendId));
-        return userService.addFriend(id, friendId);
+        return friendService.addFriend(id, friendId);
     }
 
     @DeleteMapping("{id}/friends/{friendId}")
     public boolean deleteFriend(@PathVariable Long id,
-                                       @PathVariable Long friendId) {
+                                @PathVariable Long friendId) {
         log.debug(String.format("Put: user id=%d delete friend with id=%d", id, friendId));
-        return userService.deleteFriend(id, friendId);
+        return friendService.deleteFriend(id, friendId);
     }
 }

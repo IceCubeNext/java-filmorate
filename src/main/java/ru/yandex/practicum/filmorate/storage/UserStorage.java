@@ -11,6 +11,4 @@ public interface UserStorage {
     List<User> getUsers();
     Optional<User> updateUser(User user);
     Optional<User> deleteUser(long id);
-    boolean addFriend(long id, long friendId);
-    boolean deleteFriend(long id, long friendId);
 }

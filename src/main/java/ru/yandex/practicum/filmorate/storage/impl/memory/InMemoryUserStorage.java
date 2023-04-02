@@ -1,4 +1,4 @@
-package ru.yandex.practicum.filmorate.storage.impl;
+package ru.yandex.practicum.filmorate.storage.impl.memory;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -14,20 +14,20 @@ public class InMemoryUserStorage implements UserStorage {
     private final Map<Long, User> users = new HashMap<>();
     private long id = 1L;
 
+    @Override
     public boolean containsUser(long id) {
         return users.containsKey(id);
     }
 
+    @Override
     public Optional<User> addUser(User user) {
         long id = getNewId();
         user.setId(id);
-        if (user.getFriendsId() == null) {
-            user.setFriendsId(new HashSet<>());
-        }
         users.put(id, user);
         return Optional.of(users.get(id));
     }
 
+    @Override
     public Optional<User> getUserById(long id) {
         if(users.containsKey(id)) {
             return Optional.of(users.get(id));
@@ -36,16 +36,15 @@ public class InMemoryUserStorage implements UserStorage {
         }
     }
 
+    @Override
     public List<User> getUsers() {
         return new ArrayList<>(users.values());
     }
 
+    @Override
     public Optional<User> updateUser(User user) {
         long id = user.getId();
         if(users.containsKey(id)) {
-            if (user.getFriendsId() == null) {
-                user.setFriendsId(new HashSet<>());
-            }
             users.put(id, user);
             return Optional.of(users.get(id));
         } else {
@@ -53,6 +52,7 @@ public class InMemoryUserStorage implements UserStorage {
         }
     }
 
+    @Override
     public Optional<User> deleteUser(long id) {
         if(users.containsKey(id)) {
             User user = users.get(id);
@@ -61,26 +61,6 @@ public class InMemoryUserStorage implements UserStorage {
         } else {
             throw new NotFoundException(String.format("User with id=%d not found", id));
         }
-    }
-
-    public boolean addFriend(long id, long friendId) {
-        if (!(users.containsKey(id) && users.containsKey(friendId))) {
-            id = users.containsKey(id) ? friendId : id;
-            throw  new NotFoundException(String.format("User with id=%d not found", id));
-        }
-        users.get(id).getFriendsId().add(friendId);
-        users.get(friendId).getFriendsId().add(id);
-        return true;
-    }
-
-    public boolean deleteFriend(long id, long friendId) {
-        if (!(users.containsKey(id) && users.containsKey(friendId))) {
-            id = users.containsKey(id) ? friendId : id;
-            throw  new NotFoundException(String.format("User with id=%d not found", id));
-        }
-        users.get(id).getFriendsId().remove(friendId);
-        users.get(friendId).getFriendsId().remove(id);
-        return true;
     }
 
     private long getNewId() {

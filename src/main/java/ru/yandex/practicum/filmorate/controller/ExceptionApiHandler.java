@@ -41,5 +41,4 @@ public class ExceptionApiHandler {
         }
         return new ValidationErrorResponse(violations);
     }
-
 }

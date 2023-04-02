@@ -11,6 +11,4 @@ public interface FilmStorage {
     List<Film> getFilms();
     Optional<Film> updateFilm(Film film);
     Optional<Film> deleteFilm(long id);
-    boolean addLike(long id, long userId);
-    boolean deleteLike(long id, long userId);
 }
