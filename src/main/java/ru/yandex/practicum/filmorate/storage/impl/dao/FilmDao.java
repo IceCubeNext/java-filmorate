@@ -56,7 +56,11 @@ public class FilmDao implements FilmStorage {
             stmt.setString(2, film.getDescription());
             stmt.setDate(3, Date.valueOf(film.getReleaseDate()));
             stmt.setInt(4, film.getDuration());
-            stmt.setInt(5, film.getMpa().getId());
+            if (film.getMpa() != null) {
+                stmt.setInt(5, film.getMpa().getId());
+            } else {
+                stmt.setInt(5, 0);
+            }
             return stmt;
         }, keyHolder);
         if (keyHolder.getKey() != null) {
@@ -90,7 +94,7 @@ public class FilmDao implements FilmStorage {
 
     @Override
     public List<Film> getFilms() {
-        String sqlQuery = "select * from films";
+        String sqlQuery = "select * from films order by film_id";
         return jdbcTemplate.query(sqlQuery, this::makeFilm);
     }
 

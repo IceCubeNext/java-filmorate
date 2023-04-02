@@ -77,7 +77,7 @@ public class UserDao implements UserStorage {
 
     @Override
     public List<User> getUsers() {
-        String sql = "select * from users";
+        String sql = "select * from users order by user_id";
         return jdbcTemplate.query(sql, this::makeUser);
     }
 

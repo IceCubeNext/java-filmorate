@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.LikeStorage;
 
 import java.util.List;
@@ -29,5 +30,13 @@ public class LikeService {
 
     public List<Film> getTop(int count) {
         return likeStorage.getTop(count);
+    }
+
+    public List<Film> getUsersFavoriteFilms(long id) {
+        return likeStorage.getUsersFavoriteFilms(id);
+    }
+
+    public List<User> getFilmFollowers(long id) {
+        return likeStorage.getFilmFollowers(id);
     }
 }

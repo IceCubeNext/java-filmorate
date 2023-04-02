@@ -7,7 +7,8 @@ VALUES (1, 'Комедия'),
        (6, 'Боевик');
 
 MERGE INTO mpa_rating KEY(mpa_id)
-VALUES (1, 'G'),
+VALUES (0, 'NULL'),
+       (1, 'G'),
        (2, 'PG'),
        (3, 'PG-13'),
        (4, 'R'),
