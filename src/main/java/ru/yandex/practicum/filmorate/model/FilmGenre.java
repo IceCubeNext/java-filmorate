@@ -9,10 +9,10 @@ import lombok.ToString;
 @ToString
 public class FilmGenre {
     private Long filmId;
-    private Integer genre_id;
+    private Integer genreId;
 
     public FilmGenre(Long filmId, Integer genreId) {
         this.filmId = filmId;
-        this.genre_id = genreId;
+        this.genreId = genreId;
     }
 }
