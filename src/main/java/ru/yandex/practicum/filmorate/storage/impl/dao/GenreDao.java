@@ -40,7 +40,7 @@ public class GenreDao {
     }
 
     public List<Genre> getGenres() {
-        String sqlQuery = "select * from genre";
+        String sqlQuery = "select * from genre order by genre_id";
         return jdbcTemplate.query(sqlQuery, this::makeGenre);
     }
 

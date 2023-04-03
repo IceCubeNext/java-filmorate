@@ -52,8 +52,7 @@ public class UserDao implements UserStorage {
         }, keyHolder);
         if (keyHolder.getKey() != null) {
             long id = keyHolder.getKey().longValue();
-            user.setId(id);
-            return Optional.of(user);
+            return getUserById(id);
         } else {
             throw new RuntimeException(String.format("Error occurred while updating user %s", user));
         }

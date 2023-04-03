@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.test.annotation.DirtiesContext;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.model.User;
 
@@ -19,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @AutoConfigureTestDatabase
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class UserDaoTest {
     private final UserDao userDao;
 
@@ -148,6 +149,7 @@ class UserDaoTest {
         assertTrue(optionalUser.isPresent());
         assertEquals("User", optionalUser.get().getName());
 
+        user = optionalUser.get();
         user.setName("NewName");
         userDao.updateUser(user);
         optionalUser = userDao.getUserById(1);
@@ -168,6 +170,7 @@ class UserDaoTest {
         assertTrue(optionalUser.isPresent());
         assertEquals("login", optionalUser.get().getLogin());
 
+        user = optionalUser.get();
         user.setLogin("NewLogin");
         userDao.updateUser(user);
         optionalUser = userDao.getUserById(1);
@@ -188,6 +191,7 @@ class UserDaoTest {
         assertTrue(optionalUser.isPresent());
         assertEquals("mail@mail.ru", optionalUser.get().getEmail());
 
+        user = optionalUser.get();
         user.setEmail("newmail@mail.ru");
         userDao.updateUser(user);
         optionalUser = userDao.getUserById(1);
@@ -208,6 +212,7 @@ class UserDaoTest {
         assertTrue(optionalUser.isPresent());
         assertEquals(LocalDate.of(1991, 12, 12), optionalUser.get().getBirthday());
 
+        user = optionalUser.get();
         user.setBirthday(LocalDate.of(1991, 12, 1));
         userDao.updateUser(user);
         optionalUser = userDao.getUserById(1);
@@ -228,6 +233,5 @@ class UserDaoTest {
         userDao.deleteUser(1);
         assertThrows(NotFoundException.class, () -> userDao.containsUser(1));
     }
-
 }
 

@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS films
     CONSTRAINT fk_mpa_rating
         FOREIGN KEY (mpa_rating)
             REFERENCES mpa_rating (mpa_id)
+                ON DELETE CASCADE
 );
 
 CREATE UNIQUE INDEX IF NOT EXISTS film_id_index ON films (film_id);
@@ -32,10 +33,12 @@ CREATE TABLE IF NOT EXISTS film_genre
     PRIMARY KEY (film_id, genre_id),
     CONSTRAINT fk_film
         FOREIGN KEY (film_id)
-            REFERENCES films (film_id),
+            REFERENCES films (film_id)
+                ON DELETE CASCADE,
     CONSTRAINT fk_film_genre
         FOREIGN KEY (genre_id)
             REFERENCES genre (genre_id)
+                ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS users
@@ -56,10 +59,12 @@ CREATE TABLE IF NOT EXISTS likes
     PRIMARY KEY (user_id, film_id),
     CONSTRAINT fk_like_user
         FOREIGN KEY (user_id)
-            REFERENCES users (user_id),
+            REFERENCES users (user_id)
+                ON DELETE CASCADE,
     CONSTRAINT fk_like_film
         FOREIGN KEY (film_id)
             REFERENCES films (film_id)
+                ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS friends
@@ -70,9 +75,11 @@ CREATE TABLE IF NOT EXISTS friends
     PRIMARY KEY (user_id, friend_id),
     CONSTRAINT fk_friend_user
         FOREIGN KEY (user_id)
-            REFERENCES users (user_id),
+            REFERENCES users (user_id)
+                ON DELETE CASCADE,
     CONSTRAINT fk_friend
         FOREIGN KEY (friend_id)
-            REFERENCES users (user_id),
+            REFERENCES users (user_id)
+                ON DELETE CASCADE,
     CONSTRAINT status_valid_values CHECK (status IN (0, 1, 2))
 );
