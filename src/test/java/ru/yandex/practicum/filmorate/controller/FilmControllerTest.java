@@ -10,7 +10,12 @@ import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.model.Genre;
+import ru.yandex.practicum.filmorate.model.Mpa;
+
 import java.time.LocalDate;
+import java.util.List;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -37,11 +42,13 @@ class FilmControllerTest {
     public void addNormalFilm() throws Exception {
         mapper.registerModule(new JavaTimeModule());
         Film film = Film.builder()
-                .id(1)
+                .id(1L)
                 .name("Film")
                 .description("Description")
                 .releaseDate(LocalDate.of(2010, 10, 10))
                 .duration(60)
+                .mpa(new Mpa(1, "G"))
+                .genres(List.of(new Genre(1, "Комедия")))
                 .build();
         String json = mapper.writeValueAsString(film);
         mockMvc.perform(
@@ -56,11 +63,13 @@ class FilmControllerTest {
     public void addFilmWithEmptyName() throws Exception {
         mapper.registerModule(new JavaTimeModule());
         Film film = Film.builder()
-                .id(1)
+                .id(1L)
                 .name("")
                 .description("Description")
                 .releaseDate(LocalDate.of(2010, 10, 10))
                 .duration(60)
+                .mpa(new Mpa(1, "G"))
+                .genres(List.of(new Genre(1, "Комедия")))
                 .build();
         String json = mapper.writeValueAsString(film);
         mockMvc.perform(
@@ -75,11 +84,13 @@ class FilmControllerTest {
     public void addFilmWithNegativeDuration() throws Exception {
         mapper.registerModule(new JavaTimeModule());
         Film film = Film.builder()
-                .id(1)
+                .id(1L)
                 .name("Film")
                 .description("Description")
                 .releaseDate(LocalDate.of(2010, 10, 10))
                 .duration(-60)
+                .mpa(new Mpa(1, "G"))
+                .genres(List.of(new Genre(1, "Комедия")))
                 .build();
         String json = mapper.writeValueAsString(film);
         mockMvc.perform(
@@ -94,11 +105,13 @@ class FilmControllerTest {
     public void addFilmWithZeroDuration() throws Exception {
         mapper.registerModule(new JavaTimeModule());
         Film film = Film.builder()
-                .id(1)
+                .id(1L)
                 .name("Film")
                 .description("Description")
                 .releaseDate(LocalDate.of(2010, 10, 10))
                 .duration(0)
+                .mpa(new Mpa(1, "G"))
+                .genres(List.of(new Genre(1, "Комедия")))
                 .build();
         String json = mapper.writeValueAsString(film);
         mockMvc.perform(
@@ -113,11 +126,13 @@ class FilmControllerTest {
     public void addFilmWithEmptyDescription() throws Exception {
         mapper.registerModule(new JavaTimeModule());
         Film film = Film.builder()
-                .id(1)
+                .id(1L)
                 .name("Film")
                 .description("")
                 .releaseDate(LocalDate.of(2010, 10, 10))
                 .duration(60)
+                .mpa(new Mpa(1, "G"))
+                .genres(List.of(new Genre(1, "Комедия")))
                 .build();
         String json = mapper.writeValueAsString(film);
         mockMvc.perform(
@@ -133,11 +148,13 @@ class FilmControllerTest {
         mapper.registerModule(new JavaTimeModule());
         String newString = "a".repeat(200);
         Film film = Film.builder()
-                .id(1)
+                .id(1L)
                 .name("Film")
                 .description(newString)
                 .releaseDate(LocalDate.of(2010, 10, 10))
                 .duration(60)
+                .mpa(new Mpa(1, "G"))
+                .genres(List.of(new Genre(1, "Комедия")))
                 .build();
         String json = mapper.writeValueAsString(film);
         mockMvc.perform(
@@ -153,11 +170,13 @@ class FilmControllerTest {
         mapper.registerModule(new JavaTimeModule());
         String newString = "a".repeat(201);
         Film film = Film.builder()
-                .id(1)
+                .id(1L)
                 .name("Film")
                 .description(newString)
                 .releaseDate(LocalDate.of(2010, 10, 10))
                 .duration(60)
+                .mpa(new Mpa(1, "G"))
+                .genres(List.of(new Genre(1, "Комедия")))
                 .build();
         String json = mapper.writeValueAsString(film);
         mockMvc.perform(
@@ -172,11 +191,13 @@ class FilmControllerTest {
     public void addFilmWithEarliestRelease() throws Exception {
         mapper.registerModule(new JavaTimeModule());
         Film film = Film.builder()
-                .id(1)
+                .id(1L)
                 .name("Film")
                 .description("Description")
                 .releaseDate(LocalDate.of(1895, 12, 28))
                 .duration(60)
+                .mpa(new Mpa(1, "G"))
+                .genres(List.of(new Genre(1, "Комедия")))
                 .build();
         String json = mapper.writeValueAsString(film);
         mockMvc.perform(
@@ -191,7 +212,7 @@ class FilmControllerTest {
     public void addFilmWithTooEarlieRelease() throws Exception {
         mapper.registerModule(new JavaTimeModule());
         Film film = Film.builder()
-                .id(1)
+                .id(1L)
                 .name("Film")
                 .description("Description")
                 .releaseDate(LocalDate.of(1895, 12, 27))

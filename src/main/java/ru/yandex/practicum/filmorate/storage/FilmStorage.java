@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FilmStorage {
-    boolean containsFilm(long id);
+    boolean containsFilm(Long id);
     Optional<Film> addFilm(Film film);
-    Optional<Film> getFilmById(long id);
+    Optional<Film> getFilmById(Long id);
     List<Film> getFilms();
     Optional<Film> updateFilm(Film film);
-    Optional<Film> deleteFilm(long id);
+    Optional<Film> deleteFilm(Long id);
 }

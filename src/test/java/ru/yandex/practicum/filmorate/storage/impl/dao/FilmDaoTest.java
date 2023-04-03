@@ -34,23 +34,27 @@ class FilmDaoTest {
                 .description("Description")
                 .releaseDate(LocalDate.of(2000, 10, 10))
                 .duration(60)
+                .mpa(new Mpa(1, "G"))
+                .genres(List.of(new Genre(1, "Комедия")))
                 .build();
         filmDao.addFilm(film);
-        assertTrue(filmDao.containsFilm(1));
-        assertThrows(NotFoundException.class, () -> filmDao.containsFilm(2));
+        assertTrue(filmDao.containsFilm(1L));
+        assertThrows(NotFoundException.class, () -> filmDao.containsFilm(2L));
     }
 
     @Test
     public void testAddFilm() {
-        assertThrows(NotFoundException.class, () -> filmDao.containsFilm(1));
+        assertThrows(NotFoundException.class, () -> filmDao.containsFilm(1L));
         Film film = Film.builder()
                 .name("Film")
                 .description("Description")
                 .releaseDate(LocalDate.of(2000, 10, 10))
                 .duration(60)
+                .mpa(new Mpa(1, "G"))
+                .genres(List.of(new Genre(1, "Комедия")))
                 .build();
         filmDao.addFilm(film);
-        assertTrue(filmDao.containsFilm(1));
+        assertTrue(filmDao.containsFilm(1L));
     }
 
     @Test
@@ -60,9 +64,11 @@ class FilmDaoTest {
                 .description("Description")
                 .releaseDate(LocalDate.of(2000, 10, 10))
                 .duration(60)
+                .mpa(new Mpa(1, "G"))
+                .genres(List.of(new Genre(1, "Комедия")))
                 .build();
         filmDao.addFilm(film);
-        Optional<Film> filmOptional = filmDao.getFilmById(1);
+        Optional<Film> filmOptional = filmDao.getFilmById(1L);
         assertThat(filmOptional)
                 .isPresent()
                 .hasValueSatisfying(flm ->
@@ -77,6 +83,8 @@ class FilmDaoTest {
                 .description("Description")
                 .releaseDate(LocalDate.of(2000, 10, 10))
                 .duration(60)
+                .mpa(new Mpa(1, "G"))
+                .genres(List.of(new Genre(1, "Комедия")))
                 .build();
         filmDao.addFilm(film1);
         Film film2 = Film.builder()
@@ -84,6 +92,8 @@ class FilmDaoTest {
                 .description("Description")
                 .releaseDate(LocalDate.of(2000, 10, 10))
                 .duration(60)
+                .mpa(new Mpa(1, "G"))
+                .genres(List.of(new Genre(1, "Комедия")))
                 .build();
         filmDao.addFilm(film2);
         List<Film> films = filmDao.getFilms();
@@ -109,14 +119,14 @@ class FilmDaoTest {
                 .genres(List.of(new Genre(1, "Комедия")))
                 .build();
         filmDao.addFilm(film);
-        Optional<Film> optionalFilm = filmDao.getFilmById(1);
+        Optional<Film> optionalFilm = filmDao.getFilmById(1L);
         assertTrue(optionalFilm.isPresent());
         assertEquals("Film", optionalFilm.get().getName());
 
         film = optionalFilm.get();
         film.setName("NewFilm");
         filmDao.updateFilm(film);
-        optionalFilm = filmDao.getFilmById(1);
+        optionalFilm = filmDao.getFilmById(1L);
         assertTrue(optionalFilm.isPresent());
         assertEquals("NewFilm", optionalFilm.get().getName());
     }
@@ -132,14 +142,14 @@ class FilmDaoTest {
                 .genres(List.of(new Genre(1, "Комедия")))
                 .build();
         filmDao.addFilm(film);
-        Optional<Film> optionalFilm = filmDao.getFilmById(1);
+        Optional<Film> optionalFilm = filmDao.getFilmById(1L);
         assertTrue(optionalFilm.isPresent());
         assertEquals("Description", optionalFilm.get().getDescription());
 
         film = optionalFilm.get();
         film.setDescription("NewDescription");
         filmDao.updateFilm(film);
-        optionalFilm = filmDao.getFilmById(1);
+        optionalFilm = filmDao.getFilmById(1L);
         assertTrue(optionalFilm.isPresent());
         assertEquals("NewDescription", optionalFilm.get().getDescription());
     }
@@ -155,14 +165,14 @@ class FilmDaoTest {
                 .genres(List.of(new Genre(1, "Комедия")))
                 .build();
         filmDao.addFilm(film);
-        Optional<Film> optionalFilm = filmDao.getFilmById(1);
+        Optional<Film> optionalFilm = filmDao.getFilmById(1L);
         assertTrue(optionalFilm.isPresent());
         assertEquals(LocalDate.of(2000, 10, 10), optionalFilm.get().getReleaseDate());
 
         film = optionalFilm.get();
         film.setReleaseDate(LocalDate.of(2000, 10, 1));
         filmDao.updateFilm(film);
-        optionalFilm = filmDao.getFilmById(1);
+        optionalFilm = filmDao.getFilmById(1L);
         assertTrue(optionalFilm.isPresent());
         assertEquals(LocalDate.of(2000, 10, 1), optionalFilm.get().getReleaseDate());
     }
@@ -178,14 +188,14 @@ class FilmDaoTest {
                 .genres(List.of(new Genre(1, "Комедия")))
                 .build();
         filmDao.addFilm(film);
-        Optional<Film> optionalFilm = filmDao.getFilmById(1);
+        Optional<Film> optionalFilm = filmDao.getFilmById(1L);
         assertTrue(optionalFilm.isPresent());
         assertEquals(60, optionalFilm.get().getDuration());
 
         film = optionalFilm.get();
         film.setDuration(30);
         filmDao.updateFilm(film);
-        optionalFilm = filmDao.getFilmById(1);
+        optionalFilm = filmDao.getFilmById(1L);
         assertTrue(optionalFilm.isPresent());
         assertEquals(30, optionalFilm.get().getDuration());
     }
@@ -201,14 +211,14 @@ class FilmDaoTest {
                 .genres(List.of(new Genre(1, "Комедия")))
                 .build();
         filmDao.addFilm(film);
-        Optional<Film> optionalFilm = filmDao.getFilmById(1);
+        Optional<Film> optionalFilm = filmDao.getFilmById(1L);
         assertTrue(optionalFilm.isPresent());
         assertEquals(new Mpa(1, "G"), optionalFilm.get().getMpa());
 
         film = optionalFilm.get();
         film.setMpa(new Mpa(2, "PG"));
         filmDao.updateFilm(film);
-        optionalFilm = filmDao.getFilmById(1);
+        optionalFilm = filmDao.getFilmById(1L);
         assertTrue(optionalFilm.isPresent());
         assertEquals(new Mpa(2, "PG"), optionalFilm.get().getMpa());
     }
@@ -224,20 +234,20 @@ class FilmDaoTest {
                 .genres(List.of(new Genre(1, "Комедия")))
                 .build();
         filmDao.addFilm(film);
-        Optional<Film> optionalFilm = filmDao.getFilmById(1);
+        Optional<Film> optionalFilm = filmDao.getFilmById(1L);
         assertTrue(optionalFilm.isPresent());
         assertEquals(List.of(new Genre(1, "Комедия")), optionalFilm.get().getGenres());
 
         film = optionalFilm.get();
         film.setGenres(null);
         filmDao.updateFilm(film);
-        optionalFilm = filmDao.getFilmById(1);
+        optionalFilm = filmDao.getFilmById(1L);
         assertTrue(optionalFilm.isPresent());
         assertEquals(Collections.emptyList(), optionalFilm.get().getGenres());
 
         film.setGenres(List.of(new Genre(1, "Комедия"), new Genre(2, "Драма")));
         filmDao.updateFilm(film);
-        optionalFilm = filmDao.getFilmById(1);
+        optionalFilm = filmDao.getFilmById(1L);
         assertTrue(optionalFilm.isPresent());
         assertEquals(List.of(new Genre(1, "Комедия"), new Genre(2, "Драма")), optionalFilm.get().getGenres());
     }
@@ -253,8 +263,8 @@ class FilmDaoTest {
                 .genres(List.of(new Genre(1, "Комедия")))
                 .build();
         filmDao.addFilm(film);
-        assertTrue(filmDao.containsFilm(1));
-        filmDao.deleteFilm(1);
-        assertThrows(NotFoundException.class, () -> filmDao.containsFilm(1));
+        assertTrue(filmDao.containsFilm(1L));
+        filmDao.deleteFilm(1L);
+        assertThrows(NotFoundException.class, () -> filmDao.containsFilm(1L));
     }
 }

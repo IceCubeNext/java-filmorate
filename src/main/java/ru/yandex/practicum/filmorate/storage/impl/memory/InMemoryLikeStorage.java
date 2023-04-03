@@ -27,7 +27,7 @@ public class InMemoryLikeStorage implements LikeStorage {
     }
 
     @Override
-    public boolean addLike(long id, long userId) {
+    public boolean addLike(Long id, Long userId) {
         if (filmStorage.containsFilm(id) && userStorage.containsUser(userId)) {
             if (filmLikes.containsKey(id)) {
                 filmLikes.get(id).add(userId);
@@ -48,7 +48,7 @@ public class InMemoryLikeStorage implements LikeStorage {
     }
 
     @Override
-    public boolean deleteLike(long id, long userId) {
+    public boolean deleteLike(Long id, Long userId) {
         if (filmStorage.containsFilm(id) && userStorage.containsUser(userId)) {
             if (filmLikes.containsKey(id)) {
                 filmLikes.get(id).remove(userId);
@@ -63,7 +63,7 @@ public class InMemoryLikeStorage implements LikeStorage {
     }
 
     @Override
-    public List<Film> getUsersFavoriteFilms(long id) {
+    public List<Film> getUsersFavoriteFilms(Long id) {
         if (userLikes.containsKey(id)) {
             return userLikes.get(id).stream()
                     .map(filmStorage::getFilmById)
@@ -75,7 +75,7 @@ public class InMemoryLikeStorage implements LikeStorage {
     }
 
     @Override
-    public List<User> getFilmFollowers(long id) {
+    public List<User> getFilmFollowers(Long id) {
         if (filmLikes.containsKey(id)) {
             return filmLikes.get(id).stream()
                     .map(userStorage::getUserById)
@@ -87,7 +87,7 @@ public class InMemoryLikeStorage implements LikeStorage {
     }
 
     @Override
-    public List<Film> getTop(int count) {
+    public List<Film> getTop(Integer count) {
         return filmLikes.entrySet().stream()
                 .sorted(Comparator.comparingInt(e -> e.getValue().size() * -1))
                 .limit(count)
@@ -98,9 +98,9 @@ public class InMemoryLikeStorage implements LikeStorage {
                 .collect(Collectors.toList());
     }
 
-    public boolean deleteUser(long id) {
+    public boolean deleteUser(Long id) {
         if (userLikes.containsKey(id)) {
-            for(long filmId: userLikes.get(id)) {
+            for(Long filmId: userLikes.get(id)) {
                 if(filmLikes.containsKey(filmId)) {
                     filmLikes.get(filmId).remove(id);
                     if (filmLikes.get(filmId).size() == 0) filmLikes.remove(filmId);
@@ -112,9 +112,9 @@ public class InMemoryLikeStorage implements LikeStorage {
         return false;
     }
 
-    public boolean deleteFilm(long id) {
+    public boolean deleteFilm(Long id) {
         if (filmLikes.containsKey(id)) {
-            for(long userId: filmLikes.get(id)) {
+            for(Long userId: filmLikes.get(id)) {
                 if(userLikes.containsKey(userId)) {
                     userLikes.get(userId).remove(id);
                     if (userLikes.get(userId).size() == 0) userLikes.remove(userId);

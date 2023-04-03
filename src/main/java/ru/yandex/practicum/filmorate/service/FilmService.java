@@ -28,7 +28,7 @@ public class FilmService {
         return filmStorage.getFilms();
     }
 
-    public Optional<Film> getFilm(long filmId) {
+    public Optional<Film> getFilm(Long filmId) {
         return filmStorage.getFilmById(filmId);
     }
 

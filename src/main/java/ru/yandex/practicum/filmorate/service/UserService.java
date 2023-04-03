@@ -29,7 +29,7 @@ public class UserService {
         return userStorage.addUser(user);
     }
 
-    public Optional<User> getUser(long userId) {
+    public Optional<User> getUser(Long userId) {
         return userStorage.getUserById(userId);
     }
 

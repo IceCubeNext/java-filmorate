@@ -33,8 +33,8 @@ class UserDaoTest {
                 .birthday(LocalDate.of(1991, 12, 12))
                 .build();
         userDao.addUser(user);
-        assertTrue(userDao.containsUser(1));
-        Exception exception = assertThrows(NotFoundException.class, () -> userDao.containsUser(2));
+        assertTrue(userDao.containsUser(1L));
+        Exception exception = assertThrows(NotFoundException.class, () -> userDao.containsUser(2L));
         String expectedMessage = "User with id=2 not found";
         String actualMessage = exception.getMessage();
         assertEquals(actualMessage, expectedMessage);
@@ -42,7 +42,7 @@ class UserDaoTest {
 
     @Test
     public void testAddUser() {
-        assertThrows(NotFoundException.class, () -> userDao.containsUser(1));
+        assertThrows(NotFoundException.class, () -> userDao.containsUser(1L));
         User user = User.builder()
                 .name("User")
                 .login("login")
@@ -50,7 +50,7 @@ class UserDaoTest {
                 .birthday(LocalDate.of(1991, 12, 12))
                 .build();
         userDao.addUser(user);
-        assertTrue(userDao.containsUser(1));
+        assertTrue(userDao.containsUser(1L));
     }
 
     @Test
@@ -68,7 +68,7 @@ class UserDaoTest {
                 .birthday(LocalDate.of(1991, 12, 12))
                 .build();
         userDao.addUser(user1);
-        assertTrue(userDao.containsUser(1));
+        assertTrue(userDao.containsUser(1L));
         assertThrows(DuplicateKeyException.class, () -> userDao.addUser(user2));
     }
 
@@ -87,7 +87,7 @@ class UserDaoTest {
                 .birthday(LocalDate.of(1991, 12, 12))
                 .build();
         userDao.addUser(user1);
-        assertTrue(userDao.containsUser(1));
+        assertTrue(userDao.containsUser(1L));
         assertThrows(DuplicateKeyException.class, () -> userDao.addUser(user2));
     }
 
@@ -100,7 +100,7 @@ class UserDaoTest {
                 .birthday(LocalDate.of(1991, 12, 12))
                 .build();
         userDao.addUser(user);
-        Optional<User> userOptional = userDao.getUserById(1);
+        Optional<User> userOptional = userDao.getUserById(1L);
         assertThat(userOptional)
                 .isPresent()
                 .hasValueSatisfying(usr ->
@@ -145,14 +145,14 @@ class UserDaoTest {
                 .birthday(LocalDate.of(1991, 12, 12))
                 .build();
         userDao.addUser(user);
-        Optional<User> optionalUser = userDao.getUserById(1);
+        Optional<User> optionalUser = userDao.getUserById(1L);
         assertTrue(optionalUser.isPresent());
         assertEquals("User", optionalUser.get().getName());
 
         user = optionalUser.get();
         user.setName("NewName");
         userDao.updateUser(user);
-        optionalUser = userDao.getUserById(1);
+        optionalUser = userDao.getUserById(1L);
         assertTrue(optionalUser.isPresent());
         assertEquals("NewName", optionalUser.get().getName());
     }
@@ -166,14 +166,14 @@ class UserDaoTest {
                 .birthday(LocalDate.of(1991, 12, 12))
                 .build();
         userDao.addUser(user);
-        Optional<User> optionalUser = userDao.getUserById(1);
+        Optional<User> optionalUser = userDao.getUserById(1L);
         assertTrue(optionalUser.isPresent());
         assertEquals("login", optionalUser.get().getLogin());
 
         user = optionalUser.get();
         user.setLogin("NewLogin");
         userDao.updateUser(user);
-        optionalUser = userDao.getUserById(1);
+        optionalUser = userDao.getUserById(1L);
         assertTrue(optionalUser.isPresent());
         assertEquals("NewLogin", optionalUser.get().getLogin());
     }
@@ -187,14 +187,14 @@ class UserDaoTest {
                 .birthday(LocalDate.of(1991, 12, 12))
                 .build();
         userDao.addUser(user);
-        Optional<User> optionalUser = userDao.getUserById(1);
+        Optional<User> optionalUser = userDao.getUserById(1L);
         assertTrue(optionalUser.isPresent());
         assertEquals("mail@mail.ru", optionalUser.get().getEmail());
 
         user = optionalUser.get();
         user.setEmail("newmail@mail.ru");
         userDao.updateUser(user);
-        optionalUser = userDao.getUserById(1);
+        optionalUser = userDao.getUserById(1L);
         assertTrue(optionalUser.isPresent());
         assertEquals("newmail@mail.ru", optionalUser.get().getEmail());
     }
@@ -208,14 +208,14 @@ class UserDaoTest {
                 .birthday(LocalDate.of(1991, 12, 12))
                 .build();
         userDao.addUser(user);
-        Optional<User> optionalUser = userDao.getUserById(1);
+        Optional<User> optionalUser = userDao.getUserById(1L);
         assertTrue(optionalUser.isPresent());
         assertEquals(LocalDate.of(1991, 12, 12), optionalUser.get().getBirthday());
 
         user = optionalUser.get();
         user.setBirthday(LocalDate.of(1991, 12, 1));
         userDao.updateUser(user);
-        optionalUser = userDao.getUserById(1);
+        optionalUser = userDao.getUserById(1L);
         assertTrue(optionalUser.isPresent());
         assertEquals(LocalDate.of(1991, 12, 1), optionalUser.get().getBirthday());
     }
@@ -229,9 +229,9 @@ class UserDaoTest {
                 .birthday(LocalDate.of(1991, 12, 12))
                 .build();
         userDao.addUser(user);
-        assertTrue(userDao.containsUser(1));
-        userDao.deleteUser(1);
-        assertThrows(NotFoundException.class, () -> userDao.containsUser(1));
+        assertTrue(userDao.containsUser(1L));
+        userDao.deleteUser(1L);
+        assertThrows(NotFoundException.class, () -> userDao.containsUser(1L));
     }
 }
 

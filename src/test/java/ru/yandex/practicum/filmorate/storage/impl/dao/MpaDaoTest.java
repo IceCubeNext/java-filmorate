@@ -20,7 +20,7 @@ class MpaDaoTest {
     private final MpaDao mpaDao;
 
     @Test
-    public void testFindGenreById() {
+    public void testFindMpaById() {
         Optional<Mpa> mpaOptional = mpaDao.getMpaById(1);
         assertThat(mpaOptional)
                 .isPresent()
@@ -30,14 +30,13 @@ class MpaDaoTest {
     }
 
     @Test
-    public void testGetGenres() {
+    public void testGetMpa() {
         List<Mpa> mpaList = mpaDao.getMpaTypes();
-        assertEquals(6, mpaList.size());
-        assertEquals(mpaList.get(0), new Mpa(0, "NULL"));
-        assertEquals(mpaList.get(1), new Mpa(1, "G"));
-        assertEquals(mpaList.get(2), new Mpa(2, "PG"));
-        assertEquals(mpaList.get(3), new Mpa(3, "PG-13"));
-        assertEquals(mpaList.get(4), new Mpa(4, "R"));
-        assertEquals(mpaList.get(5), new Mpa(5, "NC-17"));
+        assertEquals(5, mpaList.size());
+        assertEquals(mpaList.get(0), new Mpa(1, "G"));
+        assertEquals(mpaList.get(1), new Mpa(2, "PG"));
+        assertEquals(mpaList.get(2), new Mpa(3, "PG-13"));
+        assertEquals(mpaList.get(3), new Mpa(4, "R"));
+        assertEquals(mpaList.get(4), new Mpa(5, "NC-17"));
     }
 }

@@ -21,7 +21,7 @@ public class LikeDao implements LikeStorage {
     }
 
     @Override
-    public boolean addLike(long id, long userId) {
+    public boolean addLike(Long id, Long userId) {
         if (userDao.containsUser(userId) && filmDao.containsFilm(id)) {
             String sqlQuery = "merge into likes KEY (user_id, film_id) " +
                               "values (?, ?)";
@@ -32,7 +32,7 @@ public class LikeDao implements LikeStorage {
     }
 
     @Override
-    public boolean deleteLike(long id, long userId) {
+    public boolean deleteLike(Long id, Long userId) {
         if (userDao.containsUser(userId) && filmDao.containsFilm(id)) {
             String sqlQuery = "delete from likes where user_id = ? and film_id = ?";
             jdbcTemplate.update(sqlQuery, userId, id);
@@ -42,7 +42,7 @@ public class LikeDao implements LikeStorage {
     }
 
     @Override
-    public List<Film> getUsersFavoriteFilms(long id) {
+    public List<Film> getUsersFavoriteFilms(Long id) {
         if (userDao.containsUser(id)) {
             String sql = "select * from films " +
                          "where film_id in " +
@@ -53,7 +53,7 @@ public class LikeDao implements LikeStorage {
     }
 
     @Override
-    public List<User> getFilmFollowers(long id) {
+    public List<User> getFilmFollowers(Long id) {
         if (filmDao.containsFilm(id)) {
             String sql = "select * from users " +
                          "where user_id in " +
@@ -64,7 +64,7 @@ public class LikeDao implements LikeStorage {
     }
 
     @Override
-    public List<Film> getTop(int count) {
+    public List<Film> getTop(Integer count) {
         String sql = "select f.film_id, " +
                             "f.title, " +
                             "f.description, " +

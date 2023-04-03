@@ -20,11 +20,11 @@ public class LikeService {
         this.likeStorage = likeStorage;
     }
 
-    public boolean addLike(long userId, long filmId) {
+    public boolean addLike(Long userId, Long filmId) {
         return likeStorage.addLike(filmId, userId);
     }
 
-    public boolean deleteLike(long userId, long filmId) {
+    public boolean deleteLike(Long userId, Long filmId) {
         return likeStorage.deleteLike(filmId, userId);
     }
 
@@ -32,11 +32,11 @@ public class LikeService {
         return likeStorage.getTop(count);
     }
 
-    public List<Film> getUsersFavoriteFilms(long id) {
+    public List<Film> getUsersFavoriteFilms(Long id) {
         return likeStorage.getUsersFavoriteFilms(id);
     }
 
-    public List<User> getFilmFollowers(long id) {
+    public List<User> getFilmFollowers(Long id) {
         return likeStorage.getFilmFollowers(id);
     }
 }

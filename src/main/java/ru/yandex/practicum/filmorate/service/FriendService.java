@@ -21,19 +21,19 @@ public class FriendService {
         this.friendStorage = friendStorage;
     }
 
-    public boolean addFriend(long userId, long friendId) {
+    public boolean addFriend(Long userId, Long friendId) {
         return friendStorage.addFriend(userId, friendId);
     }
 
-    public boolean deleteFriend(long userId, long friendId) {
+    public boolean deleteFriend(Long userId, Long friendId) {
         return friendStorage.deleteFriend(userId, friendId);
     }
 
-    public List<User> getFriends(long userId) {
+    public List<User> getFriends(Long userId) {
         return friendStorage.getFriends(userId);
     }
 
-    public List<User> getCommonFriends(long userId, long friendId) {
+    public List<User> getCommonFriends(Long userId, Long friendId) {
         return friendStorage.getFriends(userId).stream()
                 .filter(friendStorage.getFriends(friendId)::contains)
                 .collect(Collectors.toList());

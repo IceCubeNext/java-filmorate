@@ -7,6 +7,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.model.Genre;
+import ru.yandex.practicum.filmorate.model.Mpa;
 import ru.yandex.practicum.filmorate.model.User;
 
 import java.time.LocalDate;
@@ -32,6 +34,8 @@ class LikeDaoTest {
                 .description("Description")
                 .releaseDate(LocalDate.of(2000, 10, 10))
                 .duration(60)
+                .mpa(new Mpa(1, "G"))
+                .genres(List.of(new Genre(1, "Комедия")))
                 .build();
         User user = User.builder()
                 .name("User")
@@ -57,6 +61,8 @@ class LikeDaoTest {
                 .description("Description")
                 .releaseDate(LocalDate.of(2000, 10, 10))
                 .duration(60)
+                .mpa(new Mpa(1, "G"))
+                .genres(List.of(new Genre(1, "Комедия")))
                 .build();
         User user = User.builder()
                 .name("User")
@@ -85,12 +91,16 @@ class LikeDaoTest {
                 .description("Description")
                 .releaseDate(LocalDate.of(2000, 10, 10))
                 .duration(60)
+                .mpa(new Mpa(1, "G"))
+                .genres(List.of(new Genre(1, "Комедия")))
                 .build();
         Film film2 = Film.builder()
                 .name("Film2")
                 .description("Description2")
                 .releaseDate(LocalDate.of(1991, 10, 10))
                 .duration(60)
+                .mpa(new Mpa(1, "G"))
+                .genres(List.of(new Genre(1, "Комедия")))
                 .build();
         User user1 = User.builder()
                 .name("User")

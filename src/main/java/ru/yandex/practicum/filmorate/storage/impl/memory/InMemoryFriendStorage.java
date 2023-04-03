@@ -21,7 +21,7 @@ public class InMemoryFriendStorage implements FriendStorage {
     }
 
     @Override
-    public boolean addFriend(long id, long friendId) {
+    public boolean addFriend(Long id, Long friendId) {
         if (userStorage.containsUser(id) && userStorage.containsUser(friendId)) {
             setFriend(id, friendId);
             setFriend(friendId, id);
@@ -31,7 +31,7 @@ public class InMemoryFriendStorage implements FriendStorage {
     }
 
     @Override
-    public boolean deleteFriend(long id, long friendId) {
+    public boolean deleteFriend(Long id, Long friendId) {
         if (userStorage.containsUser(id) && userStorage.containsUser(friendId)) {
             removeFriend(id, friendId);
             removeFriend(friendId, id);
@@ -41,7 +41,7 @@ public class InMemoryFriendStorage implements FriendStorage {
     }
 
     @Override
-    public List<User> getFriends(long id) {
+    public List<User> getFriends(Long id) {
         if (userStorage.containsUser(id)) {
             if (friends.containsKey(id)) {
                 return friends.get(id).stream()
@@ -54,7 +54,7 @@ public class InMemoryFriendStorage implements FriendStorage {
         return Collections.emptyList();
     }
 
-    public void removeUser(long id) {
+    public void removeUser(Long id) {
         if (friends.containsKey(id)) {
             for (long friendId : friends.get(id)) {
                 if (friends.containsKey(friendId)) {
@@ -66,7 +66,7 @@ public class InMemoryFriendStorage implements FriendStorage {
         }
     }
 
-    private void removeFriend(long id, long friendId) {
+    private void removeFriend(Long id, Long friendId) {
         if (friends.containsKey(id)) {
             friends.get(id).remove(friendId);
             if (friends.get(id).size() == 0) {
@@ -75,7 +75,7 @@ public class InMemoryFriendStorage implements FriendStorage {
         }
     }
 
-    private void setFriend(long id, long friendId) {
+    private void setFriend(Long id, Long friendId) {
         if (friends.containsKey(id)) {
             friends.get(id).add(friendId);
         } else {

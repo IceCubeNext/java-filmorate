@@ -34,7 +34,7 @@ public class FilmDao implements FilmStorage {
     }
 
     @Override
-    public boolean containsFilm(long id) {
+    public boolean containsFilm(Long id) {
         SqlRowSet filmRows = jdbcTemplate.queryForRowSet("select * from films where film_id=?", id);
         if(filmRows.next()) {
             return true;
@@ -62,7 +62,7 @@ public class FilmDao implements FilmStorage {
             return stmt;
         }, keyHolder);
         if (keyHolder.getKey() != null) {
-            long id = keyHolder.getKey().longValue();
+            Long id = keyHolder.getKey().longValue();
             if (film.getGenres() != null) {
                 for (Genre genre: film.getGenres()) {
                     filmGenreDao.addGenreToFilm(id, genre.getId());
@@ -75,7 +75,7 @@ public class FilmDao implements FilmStorage {
     }
 
     @Override
-    public Optional<Film> getFilmById(long id) {
+    public Optional<Film> getFilmById(Long id) {
         try {
             String sql = "select * from films where film_id=?";
             Film film = jdbcTemplate.queryForObject(sql, this::makeFilm, id);
@@ -118,7 +118,7 @@ public class FilmDao implements FilmStorage {
     }
 
     @Override
-    public Optional<Film> deleteFilm(long id) {
+    public Optional<Film> deleteFilm(Long id) {
         Optional<Film> film = getFilmById(id);
         String sqlQuery = "delete from films where film_id = ?";
         jdbcTemplate.update(sqlQuery, id);

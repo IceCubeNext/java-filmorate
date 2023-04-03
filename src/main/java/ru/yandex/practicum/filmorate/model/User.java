@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Builder
 public class User {
     @PositiveOrZero(message = "Id should be positive or zero")
-    private long id;
+    private Long id;
     @NotEmpty(message = "Login should not be empty")
     @Pattern(regexp =  "([а-яёА-ЯЁ0-9]+|[a-zA-Z0-9]+)")
     private String login;

@@ -12,9 +12,9 @@ import java.util.*;
 @Component("InMemoryFilmStorage")
 public class InMemoryFilmStorage implements FilmStorage {
     private final Map<Long, Film> films = new HashMap<>();
-    private long id = 1L;
+    private Long id = 1L;
 
-    public boolean containsFilm(long id) {
+    public boolean containsFilm(Long id) {
         return films.containsKey(id);
     }
 
@@ -27,7 +27,7 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
-    public Optional<Film> getFilmById(long id) {
+    public Optional<Film> getFilmById(Long id) {
         if(films.containsKey(id)) {
             return Optional.of(films.get(id));
         } else {
@@ -51,7 +51,7 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
-    public Optional<Film> deleteFilm(long id) {
+    public Optional<Film> deleteFilm(Long id) {
         if(films.containsKey(id)) {
             Film film = films.get(id);
             films.remove(id);
@@ -61,7 +61,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         }
     }
 
-    private long getNewId() {
+    private Long getNewId() {
         return id++;
     }
 }

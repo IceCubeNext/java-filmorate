@@ -21,7 +21,7 @@ public class FriendDao implements FriendStorage {
     }
 
     @Override
-    public boolean addFriend(long id, long friendId) {
+    public boolean addFriend(Long id, Long friendId) {
         if (userDao.containsUser(id) && userDao.containsUser(friendId)) {
             int statusY = getFriendStatus(id, friendId);
             int statusF = getFriendStatus(friendId, id);
@@ -44,7 +44,7 @@ public class FriendDao implements FriendStorage {
     }
 
     @Override
-    public boolean deleteFriend(long id, long friendId) {
+    public boolean deleteFriend(Long id, Long friendId) {
         if (userDao.containsUser(id) && userDao.containsUser(friendId)) {
             int status = getFriendStatus(friendId, id);
             if (status == 2) {
@@ -61,14 +61,14 @@ public class FriendDao implements FriendStorage {
     }
 
     @Override
-    public List<User> getFriends(long id) {
+    public List<User> getFriends(Long id) {
         String sql = "select * from users " +
                      "where user_id in " +
                      "(select friend_id from friends where user_id = ?) order by user_id";
         return jdbcTemplate.query(sql, userDao::makeUser, id);
     }
 
-    private int getFriendStatus(long id, long friendId) {
+    private int getFriendStatus(Long id, Long friendId) {
         String sql = "select status from friends where user_id=? and friend_id=?";
         SqlRowSet rs = jdbcTemplate.queryForRowSet(sql, id, friendId);
         if (rs.next()) {

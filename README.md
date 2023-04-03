@@ -5,19 +5,28 @@ Template repository for Filmorate project.
 
 <img title="ER diagram" alt="ER diagram" src="/images/Entity Relationship Diagram.jpg">
 
-#### FilmService
+#### FilmDao
 
-addFilm(Film film):
-``` sql
-INSERT INTO film (title, description, release_date, duration, mpa_rating, genre_id)
-VALUES (film.getName(), film.getDescription(), ...);
-```
-
-getFilm(long id):
+containsFilm(long id):
 
 ``` sql
 SELECT * 
-FROM film
+FROM FILMS 
+WHERE film_id=?;
+```
+
+addFilm(Film film):
+
+``` sql
+INSERT INTO films (title, description, release_date, duration, mpa_rating)
+VALUES (?, ?, ?, ?, ?);
+```
+
+getFilmById(long id):
+
+``` sql
+SELECT * 
+FROM films
 WHERE film_id = id;
 ```
 
@@ -25,93 +34,100 @@ getFilms():
 
 ``` sql
 SELECT * 
-FROM film;
+FROM films
+ORDER BY film_id;
 ```
 
 updateFilm(Film film)
 
 ``` sql
-UPDATE film
-SET title = film.getName(), description = film.getDescription(), ...
-WHERE film_id = film.getId();
+UPDATE films 
+SET title = ?, description = ?, release_date = ?, duration = ?, mpa_rating = ?
+WHERE film_id = ?;
 ```
 
-addLike(long userId, long filmId)
+deleteFilm(long id)
+
 ``` sql
-INSERT INTO like (user_id, film_id)
-VALUES (userId, filmId);
+DELETE FROM films
+WHERE film_id = ?;
 ```
 
-deleteLike(long userId, long filmId)
+#### UserDao
+
+containsUser(Long id):
 ``` sql
-DELETE FROM like
-WHERE film_id = filmId
-AND user_Id = userId;
+SELECT * FROM users
+WHERE user_id=?;
 ```
-
-#### UserService
 
 addUser(User user):
 ``` sql
-INSERT INTO user (login, email, name, birthday)
-VALUES (user.getLogin(), user.getEmail(), ...);
+INSERT INTO users (login, email, name, birthday)
+VALUES (?, ?, ?, ?);
 ```
 
-getUser(long id):
+getUserById(Long id):
 
 ``` sql
-SELECT * 
-FROM user
-WHERE user_id = id;
+SELECT * FROM users
+WHERE user_id=?;
 ```
 
 getUsers():
 
 ``` sql
-SELECT * 
-FROM user;
+SELECT * FROM users
+ORDER BY user_id;
 ```
 
 updateUser(User user)
 
 ``` sql
-UPDATE user
-SET login = user.getLogin(), email = user.getEmail(), ...
-WHERE user_id = user.getId();
+UPDATE users
+SET login = ?, email = ?, name = ?, birthday = ?
+WHERE user_id = ?;
 ```
 
-addFriend(long userId, long friendId, status)
+deleteUser(Long id)
 
 ``` sql
-INSERT INTO friend (user_id, friend_id, status)
-VALUES (userId, friendId, status);
+DELETE FROM users
+WHERE user_id = ?;
 ```
 
-deleteFriend(long userId, long friendId)
+#### Some others
+
+getUsersFavoriteFilms(Long id)
 
 ``` sql
-DELETE FROM friend
-WHERE user_id = userId
-AND friend_Id = friendId;
+SELECT * FROM films
+WHERE film_id IN
+                (SELECT film_id 
+                 FROM likes 
+                 WHERE user_id = ?);
 ```
 
-getFriends(long userId)
+getFilmFollowers(Long id)
 
 ``` sql
-SELECT * 
-FROM friend
-WHERE user_id = userId;
+SELECT * FROM users
+WHERE user_id IN
+                (SELECT user_id 
+                 FROM likes 
+                 WHERE film_id = ?);
 ```
 
-getCommonFriends(long userId, long friendId)
+getTop(int count):
 
 ``` sql
-SELECT *
-from friend
-WHERE user_id = friendId
-AND friend_id IN (
-                  SELECT friend_id 
-                  FROM friend
-                  WHERE user_id = userId
-                  );
+SELECT f.film_id,
+       f.title,
+       f.description,
+       f.release_date,
+       f.duration,
+       f.mpa_rating FROM films AS f
+LEFT JOIN likes AS l ON f.film_id = l.film_id
+ORDER BY SUM(l.film_id) DESC, f.title
+LIMIT(?);
 ```

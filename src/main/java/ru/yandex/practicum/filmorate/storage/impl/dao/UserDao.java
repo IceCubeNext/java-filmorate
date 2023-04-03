@@ -26,7 +26,7 @@ public class UserDao implements UserStorage {
     }
 
     @Override
-    public boolean containsUser(long id) {
+    public boolean containsUser(Long id) {
         SqlRowSet userRows = jdbcTemplate.queryForRowSet("select * from users where user_id=?", id);
         if(userRows.next()) {
             return true;
@@ -49,7 +49,7 @@ public class UserDao implements UserStorage {
             return stmt;
         }, keyHolder);
         if (keyHolder.getKey() != null) {
-            long id = keyHolder.getKey().longValue();
+            Long id = keyHolder.getKey().longValue();
             return getUserById(id);
         } else {
             throw new RuntimeException(String.format("Error occurred while adding user %s", user));
@@ -57,7 +57,7 @@ public class UserDao implements UserStorage {
     }
 
     @Override
-    public Optional<User> getUserById(long id) {
+    public Optional<User> getUserById(Long id) {
         try {
             String sql = "select * from users where user_id=?";
             User user= jdbcTemplate.queryForObject(sql, this::makeUser, id);
@@ -97,7 +97,7 @@ public class UserDao implements UserStorage {
     }
 
     @Override
-    public Optional<User> deleteUser(long id) {
+    public Optional<User> deleteUser(Long id) {
         Optional<User> user = getUserById(id);
         String sqlQuery = "delete from users where user_id = ?";
         jdbcTemplate.update(sqlQuery, id);

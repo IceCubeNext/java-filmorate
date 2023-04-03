@@ -6,9 +6,9 @@ import ru.yandex.practicum.filmorate.model.User;
 import java.util.List;
 
 public interface LikeStorage {
-    boolean addLike(long id, long userId);
-    boolean deleteLike(long id, long userId);
-    List<Film> getUsersFavoriteFilms(long id);
-    List<User> getFilmFollowers(long id);
-    List<Film> getTop(int count);
+    boolean addLike(Long id, Long userId);
+    boolean deleteLike(Long id, Long userId);
+    List<Film> getUsersFavoriteFilms(Long id);
+    List<User> getFilmFollowers(Long id);
+    List<Film> getTop(Integer count);
 }
