@@ -16,7 +16,6 @@ public class FriendDao implements FriendStorage {
     JdbcTemplate jdbcTemplate;
     UserDao userDao;
 
-
     @Autowired
     public FriendDao(JdbcTemplate jdbcTemplate, UserDao userDao) {
         this.jdbcTemplate = jdbcTemplate;
@@ -67,7 +66,7 @@ public class FriendDao implements FriendStorage {
     public List<User> getFriends(long id) {
         String sql = "select * from users " +
                      "where user_id in " +
-                     "(select friend_id from friends where user_id = ?)";
+                     "(select friend_id from friends where user_id = ?) order by user_id";
         return jdbcTemplate.query(sql, userDao::makeUser, id);
     }
 
