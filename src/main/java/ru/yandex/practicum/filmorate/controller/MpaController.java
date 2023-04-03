@@ -17,6 +17,7 @@ import java.util.Optional;
 @RequestMapping("/mpa")
 public class MpaController {
     private final MpaService mpaService;
+
     @Autowired
     public MpaController(MpaService mpaService) {
         this.mpaService = mpaService;

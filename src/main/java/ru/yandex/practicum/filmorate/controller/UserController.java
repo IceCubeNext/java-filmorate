@@ -16,6 +16,7 @@ import java.util.*;
 public class UserController {
     private final UserService userService;
     private final FriendService friendService;
+
     @Autowired
     public UserController(UserService userService, FriendService friendService) {
         this.userService = userService;

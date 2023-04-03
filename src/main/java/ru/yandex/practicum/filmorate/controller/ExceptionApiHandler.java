@@ -19,6 +19,7 @@ import java.util.List;
 @Slf4j
 @RestControllerAdvice
 public class ExceptionApiHandler {
+
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<Map<String, String>> notFoundException(NotFoundException exception) {
         log.error(exception.getMessage());
