@@ -26,9 +26,8 @@ public class InMemoryFriendStorage implements FriendStorage {
             setFriend(id, friendId);
             setFriend(friendId, id);
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     @Override
@@ -37,9 +36,8 @@ public class InMemoryFriendStorage implements FriendStorage {
             removeFriend(id, friendId);
             removeFriend(friendId, id);
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     @Override

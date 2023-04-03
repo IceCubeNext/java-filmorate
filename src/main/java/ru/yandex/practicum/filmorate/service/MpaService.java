@@ -6,10 +6,8 @@ import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.Mpa;
 import ru.yandex.practicum.filmorate.storage.impl.dao.MpaDao;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class MpaService {
@@ -24,8 +22,6 @@ public class MpaService {
     }
 
     public List<Mpa> getMpaTypes() {
-        return mpaDao.getMpaTypes().stream()
-                .sorted(Comparator.comparing(Mpa::getId))
-                .collect(Collectors.toList());
+        return mpaDao.getMpaTypes();
     }
 }

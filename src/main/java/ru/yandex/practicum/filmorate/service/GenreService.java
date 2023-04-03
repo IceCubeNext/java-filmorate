@@ -6,10 +6,8 @@ import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.Genre;
 import ru.yandex.practicum.filmorate.storage.impl.dao.GenreDao;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class GenreService {
@@ -25,8 +23,6 @@ public class GenreService {
     }
 
     public List<Genre> getGenres() {
-        return genreDao.getGenres().stream()
-                .sorted(Comparator.comparing(Genre::getId))
-                .collect(Collectors.toList());
+        return genreDao.getGenres();
     }
 }

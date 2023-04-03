@@ -1,6 +1,5 @@
 package ru.yandex.practicum.filmorate.storage.impl.dao;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -21,7 +20,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-@Slf4j
 @Component("FilmDao")
 public class FilmDao implements FilmStorage {
     JdbcTemplate jdbcTemplate;
@@ -72,7 +70,7 @@ public class FilmDao implements FilmStorage {
             }
             return getFilmById(id);
         } else {
-            throw new RuntimeException(String.format("Error occurred while updating film %s", film));
+            throw new RuntimeException(String.format("Error occurred while add film %s", film));
         }
     }
 

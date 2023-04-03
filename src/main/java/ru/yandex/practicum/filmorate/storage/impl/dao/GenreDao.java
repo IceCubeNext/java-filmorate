@@ -1,6 +1,5 @@
 package ru.yandex.practicum.filmorate.storage.impl.dao;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -12,7 +11,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-@Slf4j
 @Component("GenreDao")
 public class GenreDao {
     JdbcTemplate jdbcTemplate;

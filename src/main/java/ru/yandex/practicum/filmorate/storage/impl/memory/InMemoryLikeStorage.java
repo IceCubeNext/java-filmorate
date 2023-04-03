@@ -43,9 +43,8 @@ public class InMemoryLikeStorage implements LikeStorage {
                 userLikes.get(userId).add(id);
             }
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     @Override
@@ -59,9 +58,8 @@ public class InMemoryLikeStorage implements LikeStorage {
                 userLikes.get(userId).remove(id);
             }
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     @Override
@@ -72,9 +70,8 @@ public class InMemoryLikeStorage implements LikeStorage {
                     .filter(Optional::isPresent)
                     .map(Optional::get)
                     .collect(Collectors.toList());
-        } else {
-            return Collections.emptyList();
         }
+        return Collections.emptyList();
     }
 
     @Override
@@ -85,9 +82,8 @@ public class InMemoryLikeStorage implements LikeStorage {
                     .filter(Optional::isPresent)
                     .map(Optional::get)
                     .collect(Collectors.toList());
-        } else {
-            return Collections.emptyList();
         }
+        return Collections.emptyList();
     }
 
     @Override

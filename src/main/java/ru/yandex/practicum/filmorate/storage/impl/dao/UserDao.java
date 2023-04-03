@@ -1,6 +1,5 @@
 package ru.yandex.practicum.filmorate.storage.impl.dao;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -17,7 +16,6 @@ import java.sql.*;
 import java.util.List;
 import java.util.Optional;
 
-@Slf4j
 @Component("UserDao")
 public class UserDao implements UserStorage {
     JdbcTemplate jdbcTemplate;
@@ -54,7 +52,7 @@ public class UserDao implements UserStorage {
             long id = keyHolder.getKey().longValue();
             return getUserById(id);
         } else {
-            throw new RuntimeException(String.format("Error occurred while updating user %s", user));
+            throw new RuntimeException(String.format("Error occurred while adding user %s", user));
         }
     }
 
