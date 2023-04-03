@@ -18,7 +18,7 @@ public class FilmController {
     private final LikeService likeService;
 
     @Autowired
-    public FilmController (FilmService filmService, LikeService likeService) {
+    public FilmController(FilmService filmService, LikeService likeService) {
         this.filmService = filmService;
         this.likeService = likeService;
     }
@@ -62,7 +62,7 @@ public class FilmController {
 
     @DeleteMapping("{id}/like/{userId}")
     public boolean deleteLike(@PathVariable Long id,
-                           @PathVariable Long userId) {
+                              @PathVariable Long userId) {
         log.debug(String.format("Delete: user id=%d delete like from film with id=%d", userId, id));
         return likeService.deleteLike(userId, id);
     }
