@@ -27,15 +27,15 @@ public class FriendDao implements FriendStorage {
             int statusF = getFriendStatus(friendId, id);
             if (statusY == 0 && statusF == 0) {
                 String sqlQuery = "insert into friends (user_id, friend_id, status) " +
-                                  "values (?, ?, ?)";
+                        "values (?, ?, ?)";
                 jdbcTemplate.update(sqlQuery, id, friendId, 1);
             } else if (statusY == 0 && statusF == 1) {
                 String sqlQuery = "insert into friends (user_id, friend_id, status) " +
-                                  "values (?, ?, ?)";
+                        "values (?, ?, ?)";
                 jdbcTemplate.update(sqlQuery, id, friendId, 2);
                 sqlQuery = "update friends " +
-                           "set status = ? " +
-                           "where user_id = ? and friend_id =?";
+                        "set status = ? " +
+                        "where user_id = ? and friend_id =?";
                 jdbcTemplate.update(sqlQuery, 2, friendId, id);
             }
             return true;
@@ -49,8 +49,8 @@ public class FriendDao implements FriendStorage {
             int status = getFriendStatus(friendId, id);
             if (status == 2) {
                 String sqlQuery = "update friends " +
-                                  "set status = ? " +
-                                  "where user_id = ? and friend_id =?";
+                        "set status = ? " +
+                        "where user_id = ? and friend_id =?";
                 jdbcTemplate.update(sqlQuery, 1, friendId, id);
             }
             String sqlQuery = "delete from friends where user_id = ? and friend_id = ?";
@@ -63,8 +63,8 @@ public class FriendDao implements FriendStorage {
     @Override
     public List<User> getFriends(Long id) {
         String sql = "select * from users " +
-                     "where user_id in " +
-                     "(select friend_id from friends where user_id = ?) order by user_id";
+                "where user_id in " +
+                "(select friend_id from friends where user_id = ?) order by user_id";
         return jdbcTemplate.query(sql, userDao::makeUser, id);
     }
 

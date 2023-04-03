@@ -29,7 +29,7 @@ public class InMemoryUserStorage implements UserStorage {
 
     @Override
     public Optional<User> getUserById(Long id) {
-        if(users.containsKey(id)) {
+        if (users.containsKey(id)) {
             return Optional.of(users.get(id));
         } else {
             throw new NotFoundException(String.format("User with id=%d not found", id));
@@ -44,7 +44,7 @@ public class InMemoryUserStorage implements UserStorage {
     @Override
     public Optional<User> updateUser(User user) {
         Long id = user.getId();
-        if(users.containsKey(id)) {
+        if (users.containsKey(id)) {
             users.put(id, user);
             return Optional.of(users.get(id));
         } else {
@@ -54,7 +54,7 @@ public class InMemoryUserStorage implements UserStorage {
 
     @Override
     public Optional<User> deleteUser(Long id) {
-        if(users.containsKey(id)) {
+        if (users.containsKey(id)) {
             User user = users.get(id);
             users.remove(id);
             return Optional.of(user);

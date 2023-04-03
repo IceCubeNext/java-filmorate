@@ -16,13 +16,14 @@ import java.util.Optional;
 @Component("MpaDao")
 public class MpaDao {
     JdbcTemplate jdbcTemplate;
+
     public MpaDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     public Optional<Mpa> getMpaById(Integer id) {
         SqlRowSet mpaRows = jdbcTemplate.queryForRowSet("select * from mpa_rating where mpa_id=?", id);
-        if(mpaRows.next()) {
+        if (mpaRows.next()) {
             Mpa mpa = new Mpa(mpaRows.getInt("mpa_id"), mpaRows.getString("name"));
             return Optional.of(mpa);
         } else {
@@ -37,6 +38,6 @@ public class MpaDao {
 
     private Mpa makeMpa(ResultSet rs, int rowNum) throws SQLException {
         return new Mpa(rs.getInt("mpa_id"),
-                       rs.getString("name"));
+                rs.getString("name"));
     }
 }

@@ -17,6 +17,7 @@ public class MpaService {
     public MpaService(@Qualifier("MpaDao") MpaDao mpaDao) {
         this.mpaDao = mpaDao;
     }
+
     public Optional<Mpa> getMpa(Integer id) {
         return mpaDao.getMpaById(id);
     }

@@ -39,13 +39,13 @@ public class FilmGenreDao {
     public void addGenreToFilm(Long filmId, Integer genreId) {
         if (genreDao.containsGenre(genreId)) {
             String sqlQuery = "merge into film_genre KEY (film_id, genre_id) " +
-                              "values(?, ?)";
+                    "values(?, ?)";
             jdbcTemplate.update(sqlQuery, filmId, genreId);
         }
     }
 
     private FilmGenre makeFilmGenre(ResultSet rs, int rowNum) throws SQLException {
         return new FilmGenre(rs.getLong("film_id"),
-                             rs.getInt("genre_id"));
+                rs.getInt("genre_id"));
     }
 }

@@ -100,8 +100,8 @@ public class InMemoryLikeStorage implements LikeStorage {
 
     public boolean deleteUser(Long id) {
         if (userLikes.containsKey(id)) {
-            for(Long filmId: userLikes.get(id)) {
-                if(filmLikes.containsKey(filmId)) {
+            for (Long filmId : userLikes.get(id)) {
+                if (filmLikes.containsKey(filmId)) {
                     filmLikes.get(filmId).remove(id);
                     if (filmLikes.get(filmId).size() == 0) filmLikes.remove(filmId);
                 }
@@ -114,8 +114,8 @@ public class InMemoryLikeStorage implements LikeStorage {
 
     public boolean deleteFilm(Long id) {
         if (filmLikes.containsKey(id)) {
-            for(Long userId: filmLikes.get(id)) {
-                if(userLikes.containsKey(userId)) {
+            for (Long userId : filmLikes.get(id)) {
+                if (userLikes.containsKey(userId)) {
                     userLikes.get(userId).remove(id);
                     if (userLikes.get(userId).size() == 0) userLikes.remove(userId);
                 }

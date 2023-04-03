@@ -36,7 +36,7 @@ public class FilmDao implements FilmStorage {
     @Override
     public boolean containsFilm(Long id) {
         SqlRowSet filmRows = jdbcTemplate.queryForRowSet("select * from films where film_id=?", id);
-        if(filmRows.next()) {
+        if (filmRows.next()) {
             return true;
         } else {
             throw new NotFoundException(String.format("Film with id=%d not found", id));
@@ -46,7 +46,7 @@ public class FilmDao implements FilmStorage {
     @Override
     public Optional<Film> addFilm(Film film) {
         String sqlQuery = "insert into films (title, description, release_date, duration, mpa_rating) " +
-                          "values (?, ?, ?, ?, ?)";
+                "values (?, ?, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement stmt = connection.prepareStatement(sqlQuery, new String[]{"film_id"});
@@ -64,7 +64,7 @@ public class FilmDao implements FilmStorage {
         if (keyHolder.getKey() != null) {
             Long id = keyHolder.getKey().longValue();
             if (film.getGenres() != null) {
-                for (Genre genre: film.getGenres()) {
+                for (Genre genre : film.getGenres()) {
                     filmGenreDao.addGenreToFilm(id, genre.getId());
                 }
             }
@@ -84,8 +84,7 @@ public class FilmDao implements FilmStorage {
             } else {
                 throw new NotFoundException(String.format("Film with id=%d not found", id));
             }
-        }
-        catch (EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException e) {
             throw new NotFoundException(String.format("Film with id=%d not found", id));
         }
     }
@@ -99,18 +98,18 @@ public class FilmDao implements FilmStorage {
     @Override
     public Optional<Film> updateFilm(Film film) {
         String sqlQuery = "update films " +
-                          "set title = ?, description = ?, release_date = ?, duration = ?, mpa_rating = ? " +
-                          "where film_id = ?";
+                "set title = ?, description = ?, release_date = ?, duration = ?, mpa_rating = ? " +
+                "where film_id = ?";
         jdbcTemplate.update(sqlQuery,
-                            film.getName(),
-                            film.getDescription(),
-                            film.getReleaseDate(),
-                            film.getDuration(),
-                            film.getMpa().getId(),
-                            film.getId());
+                film.getName(),
+                film.getDescription(),
+                film.getReleaseDate(),
+                film.getDuration(),
+                film.getMpa().getId(),
+                film.getId());
         filmGenreDao.deleteFilmGenres(film.getId());
         if (film.getGenres() != null) {
-            for (Genre genre: film.getGenres()) {
+            for (Genre genre : film.getGenres()) {
                 filmGenreDao.addGenreToFilm(film.getId(), genre.getId());
             }
         }
@@ -127,13 +126,13 @@ public class FilmDao implements FilmStorage {
 
     public Film makeFilm(ResultSet rs, int rowNum) throws SQLException {
         Film film = Film.builder()
-                    .id(rs.getLong("film_id"))
-                    .name(rs.getString("title"))
-                    .description(rs.getString("description"))
-                    .releaseDate(rs.getDate("release_date").toLocalDate())
-                    .duration(rs.getInt("duration"))
-                    .genres(filmGenreDao.getFilmGenres(rs.getLong("film_id")))
-                    .build();
+                .id(rs.getLong("film_id"))
+                .name(rs.getString("title"))
+                .description(rs.getString("description"))
+                .releaseDate(rs.getDate("release_date").toLocalDate())
+                .duration(rs.getInt("duration"))
+                .genres(filmGenreDao.getFilmGenres(rs.getLong("film_id")))
+                .build();
         Optional<Mpa> mpa = mpaDao.getMpaById(rs.getInt("mpa_rating"));
         mpa.ifPresent(film::setMpa);
         return film;

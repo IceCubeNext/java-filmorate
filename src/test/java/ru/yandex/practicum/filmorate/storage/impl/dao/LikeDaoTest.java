@@ -43,7 +43,7 @@ class LikeDaoTest {
                 .email("mail@mail.ru")
                 .birthday(LocalDate.of(1991, 12, 12))
                 .build();
-        Optional<User> optionalUser =  userDao.addUser(user);
+        Optional<User> optionalUser = userDao.addUser(user);
         Optional<Film> optionalFilm = filmDao.addFilm(film);
         assertTrue(optionalFilm.isPresent());
         assertTrue(optionalUser.isPresent());
@@ -70,7 +70,7 @@ class LikeDaoTest {
                 .email("mail@mail.ru")
                 .birthday(LocalDate.of(1991, 12, 12))
                 .build();
-        Optional<User> optionalUser =  userDao.addUser(user);
+        Optional<User> optionalUser = userDao.addUser(user);
         Optional<Film> optionalFilm = filmDao.addFilm(film);
         assertTrue(optionalFilm.isPresent());
         assertTrue(optionalUser.isPresent());
@@ -114,8 +114,8 @@ class LikeDaoTest {
                 .email("mail2@mail.ru")
                 .birthday(LocalDate.of(2000, 12, 12))
                 .build();
-        Optional<User> optionalUser1 =  userDao.addUser(user1);
-        Optional<User> optionalUser2 =  userDao.addUser(user2);
+        Optional<User> optionalUser1 = userDao.addUser(user1);
+        Optional<User> optionalUser2 = userDao.addUser(user2);
         Optional<Film> optionalFilm1 = filmDao.addFilm(film1);
         Optional<Film> optionalFilm2 = filmDao.addFilm(film2);
         assertTrue(optionalFilm1.isPresent() && optionalFilm2.isPresent());

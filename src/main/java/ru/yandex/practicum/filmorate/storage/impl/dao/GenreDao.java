@@ -14,13 +14,14 @@ import java.util.Optional;
 @Component("GenreDao")
 public class GenreDao {
     JdbcTemplate jdbcTemplate;
+
     public GenreDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     public boolean containsGenre(Integer id) {
         SqlRowSet genreRows = jdbcTemplate.queryForRowSet("select * from genre where genre_id=?", id);
-        if(genreRows.next()) {
+        if (genreRows.next()) {
             return true;
         } else {
             throw new NotFoundException(String.format("Genre with id=%d not found", id));
@@ -29,7 +30,7 @@ public class GenreDao {
 
     public Optional<Genre> getGenreById(Integer id) {
         SqlRowSet genreRows = jdbcTemplate.queryForRowSet("select * from genre where genre_id=?", id);
-        if(genreRows.next()) {
+        if (genreRows.next()) {
             Genre genre = new Genre(genreRows.getInt("genre_id"), genreRows.getString("name"));
             return Optional.of(genre);
         } else {
@@ -44,6 +45,6 @@ public class GenreDao {
 
     private Genre makeGenre(ResultSet rs, int rowNum) throws SQLException {
         return new Genre(rs.getInt("genre_id"),
-                         rs.getString("name"));
+                rs.getString("name"));
     }
 }

@@ -3,6 +3,7 @@ package ru.yandex.practicum.filmorate.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 
@@ -12,7 +13,7 @@ public class User {
     @PositiveOrZero(message = "Id should be positive or zero")
     private Long id;
     @NotEmpty(message = "Login should not be empty")
-    @Pattern(regexp =  "([а-яёА-ЯЁ0-9]+|[a-zA-Z0-9]+)")
+    @Pattern(regexp = "([а-яёА-ЯЁ0-9]+|[a-zA-Z0-9]+)")
     private String login;
     @NotEmpty(message = "Email should not be empty")
     @Email(message = "Email incorrect")

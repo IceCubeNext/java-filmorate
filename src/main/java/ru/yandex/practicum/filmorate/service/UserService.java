@@ -17,12 +17,12 @@ public class UserService {
     private final UserStorage userStorage;
 
     @Autowired
-    public UserService (@Qualifier("UserDao") UserStorage userStorage) {
+    public UserService(@Qualifier("UserDao") UserStorage userStorage) {
         this.userStorage = userStorage;
     }
 
-    public Optional<User> addUser (User user) {
-        if(StringUtils.isEmpty(user.getName())) {
+    public Optional<User> addUser(User user) {
+        if (StringUtils.isEmpty(user.getName())) {
             user.setName(user.getLogin());
         }
         return userStorage.addUser(user);

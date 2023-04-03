@@ -28,7 +28,7 @@ public class UserDao implements UserStorage {
     @Override
     public boolean containsUser(Long id) {
         SqlRowSet userRows = jdbcTemplate.queryForRowSet("select * from users where user_id=?", id);
-        if(userRows.next()) {
+        if (userRows.next()) {
             return true;
         } else {
             throw new NotFoundException(String.format("User with id=%d not found", id));
@@ -36,9 +36,9 @@ public class UserDao implements UserStorage {
     }
 
     @Override
-    public Optional<User> addUser(User user) throws DataAccessException{
+    public Optional<User> addUser(User user) throws DataAccessException {
         String sqlQuery = "insert into users (login, email, name, birthday) " +
-                          "values (?, ?, ?, ?)";
+                "values (?, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement stmt = connection.prepareStatement(sqlQuery, new String[]{"user_id"});
@@ -60,14 +60,13 @@ public class UserDao implements UserStorage {
     public Optional<User> getUserById(Long id) {
         try {
             String sql = "select * from users where user_id=?";
-            User user= jdbcTemplate.queryForObject(sql, this::makeUser, id);
+            User user = jdbcTemplate.queryForObject(sql, this::makeUser, id);
             if (user != null) {
                 return Optional.of(user);
             } else {
                 throw new NotFoundException(String.format("User with id=%d not found", id));
             }
-        }
-        catch (EmptyResultDataAccessException e) {
+        } catch (EmptyResultDataAccessException e) {
             throw new NotFoundException(String.format("User with id=%d not found", id));
         }
     }
@@ -81,14 +80,14 @@ public class UserDao implements UserStorage {
     @Override
     public Optional<User> updateUser(User user) {
         String sqlQuery = "update users " +
-                          "set login = ?, email = ?, name = ?, birthday = ? " +
-                          "where user_id = ?";
+                "set login = ?, email = ?, name = ?, birthday = ? " +
+                "where user_id = ?";
         int rows = jdbcTemplate.update(sqlQuery,
-                            user.getLogin(),
-                            user.getEmail(),
-                            user.getName(),
-                            user.getBirthday(),
-                            user.getId());
+                user.getLogin(),
+                user.getEmail(),
+                user.getName(),
+                user.getBirthday(),
+                user.getId());
         if (rows > 0) {
             return Optional.of(user);
         } else {

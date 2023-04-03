@@ -12,7 +12,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.yandex.practicum.filmorate.model.User;
+
 import java.time.LocalDate;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -51,8 +53,8 @@ class UserControllerTest {
                         post("/users")
                                 .content(json)
                                 .contentType(MediaType.APPLICATION_JSON)
-                        )
-                        .andExpect(status().isOk());
+                )
+                .andExpect(status().isOk());
     }
 
     @Test

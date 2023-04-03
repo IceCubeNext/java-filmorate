@@ -28,7 +28,7 @@ public class InMemoryFilmStorage implements FilmStorage {
 
     @Override
     public Optional<Film> getFilmById(Long id) {
-        if(films.containsKey(id)) {
+        if (films.containsKey(id)) {
             return Optional.of(films.get(id));
         } else {
             throw new NotFoundException(String.format("Film with id=%d not found", id));
@@ -42,7 +42,7 @@ public class InMemoryFilmStorage implements FilmStorage {
 
     public Optional<Film> updateFilm(Film film) {
         long id = film.getId();
-        if(films.containsKey(id)) {
+        if (films.containsKey(id)) {
             films.put(id, film);
             return Optional.of(films.get(id));
         } else {
@@ -52,7 +52,7 @@ public class InMemoryFilmStorage implements FilmStorage {
 
     @Override
     public Optional<Film> deleteFilm(Long id) {
-        if(films.containsKey(id)) {
+        if (films.containsKey(id)) {
             Film film = films.get(id);
             films.remove(id);
             return Optional.of(film);

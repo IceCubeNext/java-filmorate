@@ -7,8 +7,12 @@ import java.util.List;
 
 public interface LikeStorage {
     boolean addLike(Long id, Long userId);
+
     boolean deleteLike(Long id, Long userId);
+
     List<Film> getUsersFavoriteFilms(Long id);
+
     List<User> getFilmFollowers(Long id);
+
     List<Film> getTop(Integer count);
 }

@@ -73,9 +73,9 @@ class FilmControllerTest {
                 .build();
         String json = mapper.writeValueAsString(film);
         mockMvc.perform(
-                    post("/films")
-                            .content(json)
-                            .contentType(MediaType.APPLICATION_JSON)
+                        post("/films")
+                                .content(json)
+                                .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isBadRequest());
     }

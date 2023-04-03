@@ -14,6 +14,7 @@ public class LikeDao implements LikeStorage {
     JdbcTemplate jdbcTemplate;
     UserDao userDao;
     FilmDao filmDao;
+
     public LikeDao(JdbcTemplate jdbcTemplate, UserDao userDao, FilmDao filmDao) {
         this.jdbcTemplate = jdbcTemplate;
         this.userDao = userDao;
@@ -24,7 +25,7 @@ public class LikeDao implements LikeStorage {
     public boolean addLike(Long id, Long userId) {
         if (userDao.containsUser(userId) && filmDao.containsFilm(id)) {
             String sqlQuery = "merge into likes KEY (user_id, film_id) " +
-                              "values (?, ?)";
+                    "values (?, ?)";
             jdbcTemplate.update(sqlQuery, userId, id);
             return true;
         }
@@ -45,8 +46,8 @@ public class LikeDao implements LikeStorage {
     public List<Film> getUsersFavoriteFilms(Long id) {
         if (userDao.containsUser(id)) {
             String sql = "select * from films " +
-                         "where film_id in " +
-                         "(select film_id from likes where user_id = ?)";
+                    "where film_id in " +
+                    "(select film_id from likes where user_id = ?)";
             return jdbcTemplate.query(sql, filmDao::makeFilm, id);
         }
         return Collections.emptyList();
@@ -56,8 +57,8 @@ public class LikeDao implements LikeStorage {
     public List<User> getFilmFollowers(Long id) {
         if (filmDao.containsFilm(id)) {
             String sql = "select * from users " +
-                         "where user_id in " +
-                         "(select user_id from likes where film_id = ?)";
+                    "where user_id in " +
+                    "(select user_id from likes where film_id = ?)";
             return jdbcTemplate.query(sql, userDao::makeUser, id);
         }
         return Collections.emptyList();
@@ -66,15 +67,15 @@ public class LikeDao implements LikeStorage {
     @Override
     public List<Film> getTop(Integer count) {
         String sql = "select f.film_id, " +
-                            "f.title, " +
-                            "f.description, " +
-                            "f.release_date, " +
-                            "f.duration, " +
-                            "f.mpa_rating from films AS f " +
-                    "left join likes As l on f.film_id = l.film_id " +
-                    "group by f.film_id " +
-                    "order by sum(l.film_id) desc, f.title " +
-                    "limit(?)";
+                "f.title, " +
+                "f.description, " +
+                "f.release_date, " +
+                "f.duration, " +
+                "f.mpa_rating from films AS f " +
+                "left join likes As l on f.film_id = l.film_id " +
+                "group by f.film_id " +
+                "order by sum(l.film_id) desc, f.title " +
+                "limit(?)";
         return jdbcTemplate.query(sql, filmDao::makeFilm, count);
     }
 }
