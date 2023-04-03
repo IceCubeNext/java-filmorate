@@ -1,6 +1,3 @@
-# java-filmorate
-Template repository for Filmorate project.
-
 #### ER диаграмма БД filmorate
 
 <img title="ER diagram" alt="ER diagram" src="/images/Entity Relationship Diagram.jpg">
