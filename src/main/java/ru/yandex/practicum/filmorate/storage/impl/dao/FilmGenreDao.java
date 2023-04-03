@@ -24,7 +24,7 @@ public class FilmGenreDao {
     public List<Genre> getFilmGenres(Long id) {
         String sqlQuery = "select * from film_genre where film_id = ? order by genre_id";
         return jdbcTemplate.query(sqlQuery, this::makeFilmGenre, id).stream()
-                .map(FilmGenre::getGenre_id)
+                .map(FilmGenre::getGenreId)
                 .map(genreDao::getGenreById)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
