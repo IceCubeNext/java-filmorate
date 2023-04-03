@@ -31,7 +31,7 @@ public class MpaDao {
     }
 
     public List<Mpa> getMpaTypes() {
-        String sqlQuery = "select * from mpa_rating";
+        String sqlQuery = "select * from mpa_rating order by mpa_id";
         return jdbcTemplate.query(sqlQuery, this::makeMpa);
     }
 
