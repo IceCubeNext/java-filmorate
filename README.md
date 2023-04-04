@@ -22,16 +22,30 @@ VALUES (?, ?, ?, ?, ?);
 getFilmById(long id):
 
 ``` sql
-SELECT * 
-FROM films
-WHERE film_id = id;
+SELECT f.film_id,
+       f.title,
+       f.description,
+       f.release_date,
+       f.duration,
+       f.mpa_rating,
+       m.name as mpa_name
+FROM films AS f
+LEFT JOIN mpa_rating AS m ON f.mpa_rating = m.mpa_id
+WHERE film_id=?;
 ```
 
 getFilms():
 
 ``` sql
-SELECT * 
-FROM films
+SELECT f.film_id,
+       f.title,
+       f.description,
+       f.release_date,
+       f.duration,
+       f.mpa_rating,
+       m.name as mpa_name
+FROM films AS f
+LEFT JOIN mpa_rating AS m ON f.mpa_rating = m.mpa_id
 ORDER BY film_id;
 ```
 
@@ -98,7 +112,15 @@ WHERE user_id = ?;
 getUsersFavoriteFilms(Long id)
 
 ``` sql
-SELECT * FROM films
+SELECT f.film_id,
+       f.title,
+       f.description,
+       f.release_date,
+       f.duration,
+       f.mpa_rating,
+       m.name as mpa_name
+FROM films AS f
+LEFT JOIN mpa_rating AS m ON f.mpa_rating = m.mpa_id
 WHERE film_id IN
                 (SELECT film_id 
                  FROM likes 
@@ -123,8 +145,12 @@ SELECT f.film_id,
        f.description,
        f.release_date,
        f.duration,
-       f.mpa_rating FROM films AS f
+       f.mpa_rating,
+       m.name as mpa_name
+FROM films AS f
+LEFT JOIN mpa_rating AS m ON f.mpa_rating = m.mpa_id
 LEFT JOIN likes AS l ON f.film_id = l.film_id
+GROUP BY f.film_id
 ORDER BY SUM(l.film_id) DESC, f.title
 LIMIT(?);
 ```
