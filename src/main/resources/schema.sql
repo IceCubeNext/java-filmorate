@@ -10,15 +10,13 @@ CREATE TABLE IF NOT EXISTS films
     title        varchar(64) NOT NULL,
     description  varchar(200),
     release_date timestamp,
-    duration     integer         NOT NULL,
+    duration     integer     NOT NULL,
     mpa_rating   integer,
     CONSTRAINT fk_mpa_rating
         FOREIGN KEY (mpa_rating)
             REFERENCES mpa_rating (mpa_id)
             ON DELETE CASCADE
 );
-
-CREATE UNIQUE INDEX IF NOT EXISTS film_id_index ON films (film_id);
 
 CREATE TABLE IF NOT EXISTS genre
 (
@@ -49,8 +47,6 @@ CREATE TABLE IF NOT EXISTS users
     name     varchar(64) NOT NULL,
     birthday timestamp
 );
-
-CREATE UNIQUE INDEX IF NOT EXISTS user_id_index ON users (user_id);
 
 CREATE TABLE IF NOT EXISTS likes
 (

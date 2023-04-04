@@ -45,7 +45,15 @@ public class LikeDao implements LikeStorage {
     @Override
     public List<Film> getUsersFavoriteFilms(Long id) {
         if (userDao.containsUser(id)) {
-            String sql = "select * from films " +
+            String sql = "select f.film_id, " +
+                    "f.title, " +
+                    "f.description, " +
+                    "f.release_date, " +
+                    "f.duration, " +
+                    "f.mpa_rating, " +
+                    "m.name as mpa_name " +
+                    "from films as f " +
+                    "left join mpa_rating as m on f.mpa_rating = m.mpa_id " +
                     "where film_id in " +
                     "(select film_id from likes where user_id = ?)";
             return jdbcTemplate.query(sql, filmDao::makeFilm, id);
@@ -71,7 +79,10 @@ public class LikeDao implements LikeStorage {
                 "f.description, " +
                 "f.release_date, " +
                 "f.duration, " +
-                "f.mpa_rating from films AS f " +
+                "f.mpa_rating, " +
+                "m.name as mpa_name " +
+                "from films AS f " +
+                "left join mpa_rating as m on f.mpa_rating = m.mpa_id " +
                 "left join likes As l on f.film_id = l.film_id " +
                 "group by f.film_id " +
                 "order by sum(l.film_id) desc, f.title " +

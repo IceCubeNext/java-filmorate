@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Component("FilmGenreDao")
+@Component
 public class FilmGenreDao {
     JdbcTemplate jdbcTemplate;
     GenreDao genreDao;

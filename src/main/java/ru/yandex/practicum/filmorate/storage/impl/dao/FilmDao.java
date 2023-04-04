@@ -56,8 +56,6 @@ public class FilmDao implements FilmStorage {
             stmt.setInt(4, film.getDuration());
             if (film.getMpa() != null) {
                 stmt.setInt(5, film.getMpa().getId());
-            } else {
-                stmt.setInt(5, 0);
             }
             return stmt;
         }, keyHolder);
@@ -77,7 +75,16 @@ public class FilmDao implements FilmStorage {
     @Override
     public Optional<Film> getFilmById(Long id) {
         try {
-            String sql = "select * from films where film_id=?";
+            String sql = "select f.film_id, " +
+                    "f.title, " +
+                    "f.description, " +
+                    "f.release_date, " +
+                    "f.duration, " +
+                    "f.mpa_rating, " +
+                    "m.name as mpa_name " +
+                    "from films as f " +
+                    "left join mpa_rating as m on f.mpa_rating = m.mpa_id " +
+                    "where film_id=?";
             Film film = jdbcTemplate.queryForObject(sql, this::makeFilm, id);
             if (film != null) {
                 return Optional.of(film);
@@ -91,7 +98,16 @@ public class FilmDao implements FilmStorage {
 
     @Override
     public List<Film> getFilms() {
-        String sqlQuery = "select * from films order by film_id";
+        String sqlQuery = "select f.film_id, " +
+                "f.title, " +
+                "f.description, " +
+                "f.release_date, " +
+                "f.duration, " +
+                "f.mpa_rating, " +
+                "m.name as mpa_name " +
+                "from films as f " +
+                "left join mpa_rating as m on f.mpa_rating = m.mpa_id " +
+                "order by film_id";
         return jdbcTemplate.query(sqlQuery, this::makeFilm);
     }
 
@@ -125,16 +141,14 @@ public class FilmDao implements FilmStorage {
     }
 
     public Film makeFilm(ResultSet rs, int rowNum) throws SQLException {
-        Film film = Film.builder()
+        return Film.builder()
                 .id(rs.getLong("film_id"))
                 .name(rs.getString("title"))
                 .description(rs.getString("description"))
                 .releaseDate(rs.getDate("release_date").toLocalDate())
                 .duration(rs.getInt("duration"))
                 .genres(filmGenreDao.getFilmGenres(rs.getLong("film_id")))
+                .mpa(new Mpa(rs.getInt("mpa_rating"), rs.getString("mpa_name")))
                 .build();
-        Optional<Mpa> mpa = mpaDao.getMpaById(rs.getInt("mpa_rating"));
-        mpa.ifPresent(film::setMpa);
-        return film;
     }
 }

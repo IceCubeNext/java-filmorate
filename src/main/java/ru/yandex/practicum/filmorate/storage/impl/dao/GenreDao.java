@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-@Component("GenreDao")
+@Component
 public class GenreDao {
     JdbcTemplate jdbcTemplate;
 
