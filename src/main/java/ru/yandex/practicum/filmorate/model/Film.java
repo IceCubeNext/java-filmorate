@@ -7,14 +7,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 import ru.yandex.practicum.filmorate.validation.DateMin;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Data
 @Builder
 public class Film {
     @PositiveOrZero(message = "Id should be positive or zero")
-    private long id;
+    private Long id;
     @NotEmpty(message = "Name should not be empty")
     private String name;
     @Size(max = 200, message = "Description size should not be more than 200")
@@ -26,7 +25,7 @@ public class Film {
     private LocalDate releaseDate;
     @NotNull(message = "Duration should not be null")
     @PositiveOrZero(message = "Duration should be positive or zero")
-    private int duration;
-    @Builder.Default
-    private Set<Long> likes = new HashSet<>();
+    private Integer duration;
+    private Mpa mpa;
+    private List<Genre> genres;
 }

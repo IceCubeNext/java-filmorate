@@ -1,4 +1,5 @@
 package ru.yandex.practicum.filmorate.controller;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import java.util.List;
 @Slf4j
 @RestControllerAdvice
 public class ExceptionApiHandler {
+
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<Map<String, String>> notFoundException(NotFoundException exception) {
         log.error(exception.getMessage());
@@ -41,5 +43,4 @@ public class ExceptionApiHandler {
         }
         return new ValidationErrorResponse(violations);
     }
-
 }
