@@ -8,16 +8,10 @@
 ### Стек:
 Java 11, REST, Maven, Lombok, Junit5, Mockito, взаимодействие с БД через JDBC
 
-### Ссылка на последний pull-request
-
-[открыть](https://github.com/IceCubeNext/java-filmorate/pull/12)
-
-#### ER диаграмма БД filmorate
-
+#### Схема БД
 <img title="ER diagram" alt="ER diagram" src="/images/Entity Relationship Diagram.jpg">
 
 #### FilmDao (примеры запросов)
-
 containsFilm(long id):
 
 ``` sql
