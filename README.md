@@ -8,7 +8,7 @@
 ### Стек:
 Java 11, REST, Maven, Lombok, Junit5, Mockito, взаимодействие с БД через JDBC
 
-## Ссылка на последний pull-request
+### Ссылка на последний pull-request
 
 [открыть](https://github.com/IceCubeNext/java-filmorate/pull/12)
 
